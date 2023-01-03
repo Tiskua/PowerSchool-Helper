@@ -1,0 +1,6 @@
+framework module Pods_PowerSchool_Helper {
+  umbrella header "Pods-PowerSchool Helper-umbrella.h"
+
+  export *
+  module * { export * }
+}
