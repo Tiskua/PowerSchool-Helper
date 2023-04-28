@@ -5,12 +5,11 @@
 //  Created by Branson Campbell on 12/17/22.
 //
 
-import Foundation
 import UIKit
 import SwiftUI
+import RealmSwift
 class GradeChartManager {
-    
-    func getGradePointDataList(timeBack: Int, assignments: [[String : String]]) -> [[String : String]]{
+    func getGradePointDataList(timeBack: Int, assignments: RealmSwift.List<Assignments>) -> [[String : String]]{
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
         
@@ -22,11 +21,11 @@ class GradeChartManager {
             var pointsTotal: Double = 0.0
             
             for assignment in assignments {
-                if assignment["score"]!.contains("-") {continue}
-                let gradeDateTime = formatter.date(from: assignment["date"]!)
+                if assignment.score.contains("-") {continue}
+                let gradeDateTime = formatter.date(from: assignment.date)
                 let lastWeekDateTime = formatter.date(from: assignmentsFromPast[i])
                 if gradeDateTime! < lastWeekDateTime! {
-                    let scoreParts = assignment["score"]!.split(separator: "/")
+                    let scoreParts = assignment.score.split(separator: "/")
                     pointsEarned += Double(scoreParts[0])!
                     pointsTotal += Double(scoreParts[1])!
                 }
@@ -55,6 +54,4 @@ class GradeChartManager {
         }
         return dates
     }
-
 }
-

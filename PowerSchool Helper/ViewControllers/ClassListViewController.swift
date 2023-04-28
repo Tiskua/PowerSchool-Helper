@@ -9,20 +9,15 @@ import UIKit
 import WebKit
 import SwiftSoup
 import GoogleMobileAds
-import DropDown
 
-struct inst1 {
-    static var infoViewController: ClassListViewController = ClassListViewController()
-}
 
-class ClassListViewController: UIViewController, UIScrollViewDelegate, WKNavigationDelegate {
+class ClassListViewController: UIViewController, UIScrollViewDelegate {
     
     var selectedQuarter = 1
-    let dropDown = DropDown()
-    let quarterArray = ["Quarter 1", "Quarter 2", "Semester 1", "Quarter 3", "Final 1", "Quarter 4", "Semester2", "Year 1"]
-    
-    var selectedClass: [String:Any] = [:]
-    
+    var selectedClassName = ""
+    var selectedhref = ""
+    var loggedOut = false
+            
     let backgroundImage: UIImageView = {
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
         backgroundImage.contentMode = .scaleAspectFill
@@ -31,109 +26,300 @@ class ClassListViewController: UIViewController, UIScrollViewDelegate, WKNavigat
     
     private let banner: GADBannerView = {
         let banner = GADBannerView()
-        banner.adUnitID = "ca-app-pub-3940256099942544/6300978111"
+        banner.adUnitID = "ca-app-pub-2145540291403574/8069022745"
         banner.load(GADRequest())
         return banner
     }()
     
+    private let banner2: GADBannerView = {
+        let banner = GADBannerView()
+        banner.adUnitID = "ca-app-pub-2145540291403574/4810125939"
+        banner.load(GADRequest())
+        return banner
+    }()
+    
+    let backgroundOverlay: UIView = {
+        let imageOverlay = UIView(frame: UIScreen.main.bounds)
+        return imageOverlay
+    }()
+    
+    var scrollView: UIScrollView!
+    
+    var showSideMenu = false
+    
+    let black = UIView()
+    let sideMenuButton = UIButton()
+    let gradientLayer = CAGradientLayer()
+    let gradeLabel = UILabel()
+
+
+    var selectedLayout: layoutOptions.RawValue = layoutOptions.doubleColumn.rawValue
+    
+    enum layoutOptions: String {
+        case doubleColumn
+        case singleColumn
+    }
+
+    @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var sideMenu: UIView!
+    @IBOutlet weak var quarterButton: UIButton!
+    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var quarterLabel: UILabel!
+    @IBOutlet weak var GPALabel: UILabel!
+    @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var layoutSegmentPicker: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        inst1.infoViewController = self
+        AccountManager.global.username = UserDefaults.standard.string(forKey: "login-username") ?? "UK"
+        AccountManager.global.password = KeychainManager().getPassword(username: AccountManager.global.username)
         
-        if UserDefaults.standard.value(forKey: "quarter") != nil {selectedQuarter = UserDefaults.standard.integer(forKey: "quarter")}
+        if UserDefaults.standard.integer(forKey: "quarter") == 0 { UserDefaults.standard.set(1, forKey: "quarter") }
+        selectedQuarter = UserDefaults.standard.integer(forKey: "quarter")
+        AccountManager.global.selectedQuarter = selectedQuarter
+        if UserDefaults.standard.value(forKey: "selectedLayout") != nil {
+            selectedLayout = UserDefaults.standard.value(forKey: "selectedLayout") as! layoutOptions.RawValue
+            layoutSegmentPicker.selectedSegmentIndex = selectedLayout == layoutOptions.doubleColumn.rawValue ? 0 : 1
+        }
+        layoutSegmentPicker.selectedSegmentTintColor = Util.getThemeColor()
+        GPALabel.textColor = Util.getThemeColor()
         
-        let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+        scrollView = UIScrollView(frame: view.bounds)
         scrollView.delegate = self
-        scrollView.indicatorStyle = .white
+        scrollView.showsVerticalScrollIndicator = false
         view.insertSubview(backgroundImage, at: 0)
-        setClassLabels(scrollView: scrollView, quater: selectedQuarter)
-        if !Util.loadImage(imageView: backgroundImage) {scrollView.backgroundColor = UIColor(red: 22/255, green: 22/255, blue: 24/255, alpha: 1)}
-        banner.rootViewController = self
-        scrollView.addSubview(banner)
-        addQuarterDropDown(scrollView: scrollView)
-        banner.layer.cornerRadius = 5
-
-    }
-
-    
-    func addQuarterDropDown(scrollView: UIScrollView) {
-        let buttonWidth:CGFloat = view.frame.width/2
-        let buttonYPos: CGFloat = 30
         
-        let dropdownView = UIView(frame: CGRect(x: (view.frame.width/2)-(buttonWidth/2), y: buttonYPos, width: buttonWidth, height: 40))
-        dropdownView.backgroundColor = UIColor(red: 10/255, green: 10/255, blue: 10/255, alpha: 1)
-        dropdownView.layer.cornerRadius=15
-        let dropdownLabel: UILabel = UILabel(frame: CGRect(x: (view.frame.width/2)-(buttonWidth/2), y: buttonYPos, width: buttonWidth, height: 40))
-        dropdownLabel.backgroundColor = .clear
-        dropdownLabel.textColor = Util.getThemeColor()
-        dropdownLabel.font = UIFont(name: "Avenir Heavy", size: 25)
-        dropdownLabel.textAlignment = .center
-
-        dropDown.cellHeight = 70
-        dropDown.anchorView = dropdownView
-        dropDown.dataSource = quarterArray
-        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-        dropDown.topOffset = CGPoint(x: 0, y:-(dropDown.anchorView?.plainView.bounds.height)!)
-        dropDown.direction = .bottom
-        dropDown.backgroundColor = UIColor(red: 10/255, green: 10/255, blue: 10/255, alpha: 1)
-        dropDown.textColor = .white
-        dropDown.textFont = UIFont(name: "Avenir Heavy", size: 16)!
-        dropDown.setupCornerRadius(15)
-        dropDown.selectionAction = {(index: Int, item: String) in
-            self.selectedQuarter = index+1
-            UserDefaults.standard.set(self.selectedQuarter, forKey: "quarter")
-            self.setQuarterLabel(label: dropdownLabel)
-            self.clearInfo()
-            self.setClassLabels(scrollView: scrollView, quater: self.selectedQuarter)
-            self.showLoading(c_view: self.view)
+        if NetworkMonitor.shared.isConnected {
+            WebpageManager.shared.loadURL() {_ in
+                WebpageManager.shared.setPageLoadingStatus(status: .inital)
+            }
+            view.addSubview(WebpageManager.shared.webView)
+            banner.rootViewController = self
+            banner2.rootViewController = self
+            scrollView.addSubview(banner)
+            scrollView.addSubview(banner2)
         }
-        self.setQuarterLabel(label: dropdownLabel)
-        let dropdownButton = UIButton(frame: CGRect(x: (view.frame.width/2)-(buttonWidth/2), y: buttonYPos, width: buttonWidth, height: 40))
-        dropdownButton.backgroundColor = .clear
-        dropdownButton.addTarget(self, action: #selector(showDropDown), for: .touchUpInside)
         
-        scrollView.addSubview(dropdownView)
-        scrollView.addSubview(dropdownLabel)
-        scrollView.addSubview(dropdownButton)
+        addSideMenu()
+        setBackgroundWallpaper()
+        scrollView.backgroundColor = .clear
+        
+        view.insertSubview(backgroundOverlay, at: 1)
+        quarterLabel.text = formatQuarterLabel()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateQuarter(_:)), name: Notification.Name(rawValue: "quarter.selected"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshItems(_:)), name: Notification.Name(rawValue: "saved.settings"), object: nil)
+
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRightGesture(gesture:)))
+        swipeGesture.direction = .right
+        view.addGestureRecognizer(swipeGesture)
+        WebpageManager.shared.webView.navigationDelegate = self
+        WebpageManager.shared.webView.frame = self.view.frame
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if UserDefaults.standard.string(forKey: "pslink") == "" || KeychainManager().getPassword(username: UserDefaults.standard.string(forKey: "login-username") ?? "UK") == "" {
+            guard let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else {return}
+            loginVC.loadViewIfNeeded()
+            loginVC.isModalInPresentation = true
+            present(loginVC, animated: true)
+        } else{
+            Util.showLoading(view: self.view)
+        }
+    }
+    
+    func setBackgroundWallpaper() {
+        Util.loadImage(imageView: backgroundImage) { success in
+            if !success {
+                self.backgroundImage.image = nil
+                self.setGradientBackground()
+            } else { self.setBackgroundOverlay() }
+        }
+    }
+    
+    func configureScrollView() {
+        let refreshController: UIRefreshControl = UIRefreshControl()
+        refreshController.addTarget(self, action:#selector(handleRefreshControl), for: .valueChanged)
+        refreshController.tintColor = .lightGray
+        scrollView.refreshControl = refreshController
+    }
+    
+    @objc func handleRefreshControl() {
+        setClassLabels() { _ in
+            if !WebpageManager.shared.isLoopingClasses {
+                WebpageManager.shared.isLoopingClasses = true
+                WebpageManager.shared.loopThroughClasses(index: 0)
+            }
+        }
+
+       DispatchQueue.main.async {
+          self.scrollView.refreshControl?.endRefreshing()
+       }
+    }
+    
+    @objc func swipeRightGesture(gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .right {
+            toggleSideMenu()
+        }
+    }
+    
+    
+    func setBackgroundOverlay() {
+        if let opacity = UserDefaults.standard.value(forKey: "background-overlay-opacity") as? Float { backgroundOverlay.backgroundColor = .black.withAlphaComponent(CGFloat(opacity))
+        } else { backgroundOverlay.backgroundColor = .black.withAlphaComponent(0) }
+    }
+    
+    @objc func refreshItems(_ notification: Notification) {
+        while let viewWithTag = self.view.viewWithTag(1) {viewWithTag.removeFromSuperview()}
+        while let viewWithTag2 = self.view.viewWithTag(1) {viewWithTag2.removeFromSuperview()}
+        gradientLayer.removeFromSuperlayer()
+        setBackgroundWallpaper()
+        gradeLabel.textColor = Util.getThemeColor()
+        sideMenuButton.tintColor = Util.getThemeColor()
+        layoutSegmentPicker.selectedSegmentTintColor = Util.getThemeColor()
+        GPALabel.textColor = Util.getThemeColor()
+        backgroundOverlay.layer.opacity = UserDefaults.standard.float(forKey: "background-overlay-opacity")
+        setClassLabels() { _ in}
+        setBackgroundOverlay()
+    }
+    
+    func setGradientBackground() {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        Util.getThemeColor().getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        let colorTop =  UIColor(red: 22/255, green: 22/255, blue: 24/255, alpha: 1).cgColor
+        let colorBottom = UIColor(red: red/6, green: green/6, blue: blue/6, alpha: alpha).cgColor
+                    
+        gradientLayer.colors = [colorTop, colorBottom]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.frame = self.view.bounds
+        self.view.layer.insertSublayer(gradientLayer, at:0)
+    }
+    
+    @objc func updateQuarter(_ notification: Notification) {
+        if selectedQuarter != UserDefaults.standard.integer(forKey: "quarter") {
+            selectedQuarter = UserDefaults.standard.integer(forKey: "quarter")
+            quarterLabel.text = formatQuarterLabel()
+            showLoading(c_view: self.view)
+            setClassLabels() { _ in}
+        }
+    }
+    
+    
+    @IBAction func quarterSelectViewButton(_ sender: Any) {
+        let quarterSelectionVC = self.storyboard?.instantiateViewController(withIdentifier: "QuarterSelectionController") as! QuarterSelectionController
+        
+        if let sheet = quarterSelectionVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersGrabberVisible = true
+        }
+        self.present(quarterSelectionVC, animated: true)
+    }
+    
+    func addSideMenu() {
+        let topBar = UIView(frame: CGRect(x: 0, y: 10, width: view.frame.width, height: 50))
+        topBar.backgroundColor = .black.withAlphaComponent(0.3)
+        topBar.layer.shadowColor = UIColor.black.cgColor
+        topBar.layer.shadowOpacity = 0.3
+        topBar.layer.shadowOffset = CGSize(width: 0, height: 6)
+        topBar.layer.shadowRadius = 5
+        
+        gradeLabel.frame = CGRect(x: 10, y: 10, width: view.frame.width, height: 50)
+        gradeLabel.text = "Grades"
+        gradeLabel.font = UIFont(name: "Avenir Next Bold", size: 33)
+        gradeLabel.textColor = Util.getThemeColor()
+        
+        
+        sideMenuButton.frame = CGRect(x: view.frame.size.width-50, y: 20, width: 30, height: 30)
+        let config = UIImage.SymbolConfiguration(pointSize: 80)
+        sideMenuButton.setImage(UIImage(systemName: "line.3.horizontal", withConfiguration: config), for: .normal)
+        sideMenuButton.tintColor = Util.getThemeColor()
+        sideMenuButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleSideMenu)))
+        
+        black.frame = view.bounds
+        black.backgroundColor = .black.withAlphaComponent(0.5)
+        black.isHidden = true
+        black.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleSideMenu)))
+        
+        sideMenu.frame.size.height = view.frame.height
+        sideMenu.layer.shadowColor = UIColor.black.cgColor
+        sideMenu.layer.shadowOpacity = 0.7
+        sideMenu.layer.shadowOffset = .zero
+        sideMenu.layer.shadowRadius = 10
+        
+        let image: UIImage = (UIImage(systemName: "rectangle.portrait.and.arrow.right", withConfiguration:
+                                        UIImage.SymbolConfiguration(pointSize: 20)))!
+        logoutButton.setImage(image, for: .normal)
+        
         view.addSubview(scrollView)
+        view.addSubview(black)
+        scrollView.addSubview(topBar)
+        configureScrollView()
+        scrollView.addSubview(gradeLabel)
+        scrollView.addSubview(sideMenuButton)
+        view.addSubview(sideMenu)
     }
     
-    func setQuarterLabel(label: UILabel) {
-        switch self.selectedQuarter {
-            case 1: label.text = "Q1"
-            case 2: label.text = "Q2"
-            case 3: label.text = "S1"
-            case 4: label.text = "Q3"
-            case 5: label.text = "F1"
-            case 6: label.text = "Q4"
-            case 7: label.text = "S2"
-            case 8: label.text = "Y1"
-            default: label.text = "Q1"
+    @objc func toggleSideMenu() {
+        let config = UIImage.SymbolConfiguration(pointSize: 80)
+        if showSideMenu {
+            UIView.animate(withDuration: 0.32, animations: {
+                self.black.isHidden = true
+                self.leadingConstraint.constant = -220
+                self.view.layoutIfNeeded()
+                self.sideMenuButton.setImage(UIImage(systemName: "line.3.horizontal", withConfiguration: config), for: .normal)
+            })
+        } else {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.black.isHidden = false
+                self.leadingConstraint.constant = 0;
+                self.view.layoutIfNeeded()
+                self.sideMenuButton.setImage(UIImage(systemName: "x.circle", withConfiguration: config), for: .normal)
+            })
         }
+        showSideMenu = !showSideMenu
+
     }
     
-    @objc func showDropDown() {
-        dropDown.show()
+    @IBAction func layoutControlClick(_ sender: Any) {
+        switch layoutSegmentPicker.selectedSegmentIndex {
+            case 0: selectedLayout = layoutOptions.doubleColumn.rawValue
+            case 1: selectedLayout = layoutOptions.singleColumn.rawValue
+            default: selectedLayout = layoutOptions.singleColumn.rawValue
+        }
+        UserDefaults.standard.setValue(selectedLayout, forKey: "selectedLayout")
+        setClassLabels() { _ in }
+    }
+    
+    func formatQuarterLabel() -> String {
+        switch self.selectedQuarter {
+            case 1: return "Q1"
+            case 2: return "Q2"
+            case 3: return "S1"
+            case 4: return "Q3"
+            case 5: return "F1"
+            case 6: return "Q4"
+            case 7: return "S2"
+            case 8: return "Y1"
+            default: return "UK"
+        }
     }
 
     @objc func clearInfo() {
-        for _ in 0...15 {
-            if let viewWithTag = self.view.viewWithTag(100) {viewWithTag.removeFromSuperview()}
-            if let viewWithTag = self.view.viewWithTag(101) {viewWithTag.removeFromSuperview()}
-            if let viewWithTag = self.view.viewWithTag(102) {viewWithTag.removeFromSuperview()}
-            if let viewWithTag = self.view.viewWithTag(103) {viewWithTag.removeFromSuperview()}
-            if let viewWithTag = self.view.viewWithTag(104) {viewWithTag.removeFromSuperview()}
-            if let viewWithTag = self.view.viewWithTag(105) {viewWithTag.removeFromSuperview()}
+        while let viewWithTag = self.view.viewWithTag(100) {viewWithTag.removeFromSuperview()}
+        while let viewWithTag = self.view.viewWithTag(102) {viewWithTag.removeFromSuperview()}
+        while let viewWithTag = self.view.viewWithTag(103) {viewWithTag.removeFromSuperview()}
+        while let viewWithTag = self.view.viewWithTag(104) {viewWithTag.removeFromSuperview()}
+        while let viewWithTag = self.view.viewWithTag(105) {viewWithTag.removeFromSuperview()}
+    }
 
-        }
-    }
-    
-    
-    func openClass(href:String) {
-        WebpageManager.shared.webView.evaluateJavaScript("window.location.href='\(href)'")
-    }
-    
     func showLoading(c_view: UIView) {
         let loadingBG = UIView(frame: CGRect(x: 0, y: 0, width: c_view.frame.width, height: c_view.frame.height))
         loadingBG.backgroundColor = .black
@@ -153,34 +339,38 @@ class ClassListViewController: UIViewController, UIScrollViewDelegate, WKNavigat
         if let viewWithTag = self.view.viewWithTag(201) {viewWithTag.removeFromSuperview()}
     }
     
-    @objc func buttonAction(sender: UIButton!, c: Int) {
-        if WebpageManager.shared.getPageLoadingStatus() != .main && NetworkMonitor.shared.isConnected {return}
-        for c in ClassDataManager.shared.classes_info {
-            if c["class_name"] as? String == sender.title(for: .normal) {
-                
-                let href: String = ClassDataManager.shared.getClassData(className: c["class_name"] as! String, type: "href") as! String
-                selectedClass = c
-                showLoading(c_view: self.view)
-                if NetworkMonitor.shared.isConnected{ openClass(href: href)}
-                else {
-                    selectClass()
+    @objc func clickedClassButton(recognizer: MyTapGesture) {
+        if showSideMenu {return}
+        WebpageManager.shared.checkIfLoggedOut() { isLoggedOut in
+            if isLoggedOut { return }
+            for cl in ClassInfoManager.shared.getClassesData(username: AccountManager.global.username) {
+                if cl.class_name == recognizer.className && cl.quarter == AccountManager.global.selectedQuarter {
+                    let href: String = cl.href
+                    self.showLoading(c_view: self.view)
+                    self.selectedClassName = cl.class_name
+                    self.selectedhref = cl.href
+                    WebpageManager.shared.isLoopingClasses = false
+                    if AccountManager.global.updatedClasses.contains(cl.class_name) {
+                        self.selectClass()
+                        return
+                    }
+                    WebpageManager.shared.openClass(href: href)
+                    WebpageManager.shared.checkForAssignments() { success in
+                        if success { self.selectClass() }
+                    }
+                    break
                 }
-
-                break
-                
             }
         }
     }
-
+    
     func selectClass() {
-        guard let classViewController = self.storyboard?.instantiateViewController(withIdentifier: "ClassInfoController") as? ClassInfoController else {return}
-        classViewController.modalPresentationStyle = .overFullScreen
-        classViewController.modalTransitionStyle = .crossDissolve
-        classViewController.loadViewIfNeeded()
-        classViewController.setClassLabel(text: selectedClass["class_name"] as! String)
-        classViewController.setGPALabel(grade: selectedClass["grade"] as! Int)
-        classViewController.setPointsLabel()
-        self.present(classViewController, animated: true, completion:nil)
+        AccountManager.global.selectedClass = selectedClassName
+        AccountManager.global.selectedhref = selectedhref
+        AccountManager.global.classType = ClassType(username: AccountManager.global.username, className: selectedClassName, quarter: selectedQuarter, href: selectedhref)
+        let classInfoStoryboard = UIStoryboard(name: "ClassInfo", bundle: nil)
+        guard let tabBar = classInfoStoryboard.instantiateViewController(withIdentifier: "TabBarController") as? TabBarController else {return}
+        present(tabBar, animated: true)
         hideLoading()
     }
     
@@ -189,158 +379,276 @@ class ClassListViewController: UIViewController, UIScrollViewDelegate, WKNavigat
         let className = textArray[0].trimmingCharacters(in: .whitespacesAndNewlines)
         return className
     }
-    
+    func getTeacher(text: String) -> String {
+        let textArray = text.components(separatedBy: "Email")
+        let teacherAndRoom = textArray[1].trimmingCharacters(in: .whitespacesAndNewlines)
+        let teacher = teacherAndRoom.components(separatedBy: "Rm")[0].replacingOccurrences(of: "-", with: "")
+        return teacher.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 
-    func setClassLabels(scrollView: UIScrollView, quater: Int) {
+    func setClassLabels(completion: @escaping (Bool) -> Void) {
+        if AccountManager.global.password == "" { return }
         clearInfo()
-        if !NetworkMonitor.shared.isConnected {
-            print(ClassDataManager.shared.classes_info.count)
-            var ypos = 150
-            for classData in ClassDataManager.shared.classes_info {
-                if (classData["grade"] as! Int == -1) {
-                    if UserDefaults.standard.bool(forKey: "hide-ug-class") {continue}
-                }
-                addLabels(className: classData["class_name"] as! String, grade: classData["grade"] as! Int, scrollView: scrollView, ypos: ypos)
-                ypos += 120
-            }
-            setInfoLables(scrollView: scrollView, ypos: ypos)
-            return
-        }
-       
-        WebpageManager.shared.webView.evaluateJavaScript("document.body.innerHTML") { [self]result, error in
-            guard let html = result as? String, error == nil else {return}
-            do {
-                let doc: Document = try SwiftSoup.parseBodyFragment(html)
-                let trs: Elements = try doc.select("tr")
-                let length = trs.size()-10
-                
-                var ypos = 150
-                for i in 0...length {
-                    let tds: Elements = try trs[2+i].select("td")
-                    let text:String = try tds[11].text()
-                    
-                    let classname = getClassName(text: text)
-                    
-                    let quarterIndex = 11+quater
-                    if tds[quarterIndex].hasClass("notInSession") {continue}
-                    let link = try tds[quarterIndex].select("a").first()!
-                    let href:String = try link.attr("href")
-                    
-                    var numGradeVal = -1
-                    var numWeightedGradeVal = -1
-                    
-                    let gradeval = try tds[quarterIndex].text()
-                    if (gradeval == "[ i ]") {
-                        if UserDefaults.standard.bool(forKey: "hide-ug-class") {continue}
-                    } else {
-                        numGradeVal = Int(gradeval.split(separator: " ")[0]) ?? -1
-                        numWeightedGradeVal = Int(gradeval.split(separator: " ")[1]) ?? -1
+        var ypos = 95
+        var xpos = selectedLayout == layoutOptions.doubleColumn.rawValue ? 5 : 15
+        WebpageManager.shared.checkForClasses() { didFind in
+            WebpageManager.shared.webView.evaluateJavaScript("document.body.innerHTML") { [self]result, error in
+                guard let html = result as? String, error == nil else {return}
+                do {
+                    let doc: Document = try SwiftSoup.parseBodyFragment(html)
+                    let trs: Elements = try doc.select("tr")
+                    let length = trs.size()-10
+                    var classList: [[String : String]] = []
+                    if length < 0 { return }
+                    for i in 0...length {
+                        let tds: Elements = try trs[2+i].select("td")
+                        let text:String = try tds[11].text()
+                        let classname = getClassName(text: text)
+                        
+                        let quarterIndex = 11+selectedQuarter
+                        if tds[quarterIndex].hasClass("notInSession") {continue}
+                        let link = try tds[quarterIndex].select("a").first()!
+                        let href:String = try link.attr("href")
+                        var numGradeVal:Int = -1
+                        var numWeightedGradeVal:Int = -1
+                        
+                        let gradeval = try tds[quarterIndex].text()
+                        if gradeval == "[ i ]" {
+                            if UserDefaults.standard.bool(forKey: "hide-ug-class") {continue}
+                        } else {
+                            numWeightedGradeVal = Int(gradeval.split(separator: " ")[0]) ?? -1
+                            numGradeVal = Int(gradeval.split(separator: " ")[1]) ?? -1
+                        }
+                        let classType = ClassType(username: AccountManager.global.username, className: classname, quarter: selectedQuarter, href: href)
+                        ClassInfoManager.shared.addClass(username: AccountManager.global.username, classType: classType)
+                        ClassInfoManager.shared.setClassData(classType: classType, type: .href, value: href)
+                        ClassInfoManager.shared.setClassData(classType: classType, type: .weightedGrade, value: numWeightedGradeVal)
+                        ClassInfoManager.shared.setClassData(classType: classType, type: .grade, value: numGradeVal)
+                        classList.append([
+                            "className" : classname,
+                            "weightedGrade" : String(numWeightedGradeVal)
+                        ])
                     }
-
-                    ClassDataManager.shared.setClassData(className: classname, grade: numGradeVal, weightedGrade: numWeightedGradeVal,  href: href)
-                    addLabels(className: classname, grade: numGradeVal, scrollView: scrollView, ypos: ypos)
                     
-                    ypos += 120
+                  
+                    var adPos = Int.random(in : 0...classList.count-1)
+                    let previousAdPos = adPos
                     
+                    for a in 1...2 {
+                        classList.insert([
+                            "className" : "BANNER_CLASS_\(a)",
+                            "weightedGrade" : "-1"
+                        ], at: adPos)
+                        adPos = Int.random(in : 0...classList.count)
+                        if adPos == previousAdPos { adPos = Int.random(in : 0...classList.count-1)}
+                    }
+                    for (index,cl) in classList.enumerated() {
+                        addLabels(data: cl, position: CGPoint(x: xpos, y: ypos))
+                        let newValues = positionLabels(xpos: xpos, ypos: ypos, index: index-1)
+                        xpos = newValues[0]
+                        ypos = newValues[1]
+                    }
+                    fixSrollHeight(ypos: ypos)
+                    setGPA()
+                    Util.hideLoading(view: self.view)
+                    completion(true)
+                } catch {
+                    print("COULD NOT GET DATA:" + error.localizedDescription)
+                    completion(false)
                 }
-                setInfoLables(scrollView: scrollView, ypos: ypos)
-                
-        
-            } catch {
-                print("error")
             }
         }
     }
+       
+
+    func fixSrollHeight(ypos: Int) {
+        let bottomOffset: CGFloat = selectedLayout == layoutOptions.doubleColumn.rawValue ? 200 : 130
+        if CGFloat(ypos) + bottomOffset > view.frame.height {scrollView.contentSize.height = CGFloat(ypos) + bottomOffset}
+        else {scrollView.contentSize.height = view.frame.height+20}
+    }
     
-    func setInfoLables(scrollView: UIScrollView, ypos: Int) {
-        let overallGPALabel = UILabel(frame: CGRect(x: 20, y: 90, width: view.frame.width-20, height: 40))
-        overallGPALabel.textColor = Util.getThemeColor()
-        overallGPALabel.font = UIFont(name: "Avenir Heavy", size: 30)
-        overallGPALabel.tag = 105
-        scrollView.addSubview(overallGPALabel)
+    func positionLabels(xpos:Int, ypos:Int, index: Int) -> [Int] {
+        var ypos2 = ypos
+        var xpos2 = xpos
+        if selectedLayout == layoutOptions.doubleColumn.rawValue {
+            if index % 2 == 0 {
+                xpos2 = 5
+                ypos2 += 220}
+            else if index % 2 != 0 {xpos2 = Int(view.frame.width - (view.frame.width/2.1) - 5)}
+            
+        } else if selectedLayout == layoutOptions.singleColumn.rawValue {
+            xpos2 = 15
+            ypos2 += 160}
+        return [xpos2, ypos2]
         
+    }
+    
+    func setGPA() {
         var grades: [Int] = []
-        for c in ClassDataManager.shared.classes_info {
-            if c["grade"] as! Int == -1 {continue}
-            grades.append(c["grade"] as! Int)
+        for c in ClassInfoManager.shared.getClassesData(username: AccountManager.global.username) {
+            if c.grade == -1 || c.weighted_grade == -1 {continue}
+            if c.quarter != selectedQuarter {continue}
+            grades.append(Int(c.grade))
         }
         let oGPA: String = Util.findOverallGPA(gradeList: grades).isNaN ? "Unknown" : String(Util.findOverallGPA(gradeList: grades))
-        overallGPALabel.text = "Overall GPA: \(oGPA)"
-        
-        let buttonWidth:CGFloat = view.frame.width/2
-    
-        let logOutButton = UIButton(frame: CGRect(x: buttonWidth-(buttonWidth/2), y: CGFloat(ypos+10), width: buttonWidth, height: 40))
-        logOutButton.backgroundColor = UIColor(red: 10/255, green: 10/255, blue: 10/255, alpha: 1)
-        logOutButton.setTitle("Log Out", for: .normal)
-        logOutButton.setTitleColor(.red, for: .normal)
-        logOutButton.titleLabel?.font = UIFont(name: "Avenir Heavy", size: 18)
-        logOutButton.addTarget(self, action: #selector(logOutAction), for: .touchUpInside)
-        logOutButton.layer.cornerRadius = 15
-        logOutButton.tag = 104
-        scrollView.addSubview(logOutButton)
-        banner.frame = CGRect(x: 0, y: CGFloat(ypos + 80), width: scrollView.frame.size.width, height: 50).integral
-        scrollView.contentSize.height = view.frame.size.height+1
-        
-        if ypos > 150 {scrollView.contentSize.height = CGFloat(ypos) + 120}
+        GPALabel.text = "\(oGPA)"
         hideLoading()
     }
     
     
-    func addLabels(className: String, grade: Int, scrollView: UIScrollView, href: String = "", ypos: Int) {
-        let button_width = Int(view.frame.size.width-40)
-        let xpos = Int(view.frame.size.width)/2-(button_width/2)
-                
-        let class_view = UIView(frame: CGRect(x: xpos, y: ypos, width: (button_width), height: 100))
-        class_view.backgroundColor = Util.getThemeColor()
-        class_view.layer.cornerRadius = 10
-        class_view.tag = 100
-        class_view.layer.shadowColor = UIColor.black.cgColor
-        class_view.layer.shadowOpacity = 0.6
-        class_view.layer.shadowOffset = CGSize(width: 5, height: 5)
+    func addLabels(data: [String : String], href: String = "", position: CGPoint) {
+        let className = data["className"] ?? "UNKNOWN"
+        let grade:Int = Int(data["weightedGrade"] ?? "UNKNOWN") ?? 0
         
-        let button = UIButton(frame: CGRect(x: xpos, y: ypos, width: (button_width), height: 100))
-        button.backgroundColor = .clear
-        button.titleLabel?.layer.opacity = 0.0
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.tag = 101
+        let button_width: CGFloat = selectedLayout == layoutOptions.doubleColumn.rawValue ? CGFloat(view.frame.width/2.1) : view.frame.width - position.x*2
+        let button_height: CGFloat = selectedLayout == layoutOptions.doubleColumn.rawValue ? 200 : 130
         
-        let classNameLabel = UILabel(frame: CGRect(x: xpos+10, y: ypos, width: (button_width/2)+50, height: 100))
-        classNameLabel.font = UIFont(name: "Avenir Heavy", size: 24)
+        let b: GADBannerView = className == "BANNER_CLASS_1" ? banner : banner2
+        if className.contains("BANNER_CLASS") && grade == -1{
+            b.backgroundColor = .black.withAlphaComponent(0.9)
+            b.layer.cornerRadius = 10
+            b.layer.borderWidth = 2
+            b.layer.borderColor = Util.getThemeColor().cgColor
+            b.frame = CGRect(x: position.x, y: CGFloat(position.y), width: button_width, height: button_height).integral
+            return
+        }
+        
+        let stringTapped = MyTapGesture.init(target: self, action: #selector(clickedClassButton(recognizer:)))
+        stringTapped.className = className
+        
+        let classView = UIView(frame: CGRect(x: position.x, y: position.y, width: (button_width), height: button_height))
+        classView.addOverlay(color: Util.getThemeColor().withAlphaComponent(0.85))
+        classView.dropShadow()
+        classView.layer.cornerRadius = 10
+        classView.tag = 100
+        classView.addGestureRecognizer(stringTapped)
+        classView.layer.borderWidth = 3
+        classView.layer.borderColor = Util.getThemeColor().cgColor
+        
+        
+        let classNameLabel = UILabel(frame: CGRect(x: position.x, y: position.y, width: classView.frame.width, height: classView.frame.height/2))
+        classNameLabel.font = UIFont(name: "Avenir Next Bold", size: 25)
         classNameLabel.lineBreakMode = .byWordWrapping
-        classNameLabel.numberOfLines = 2
+        classNameLabel.numberOfLines = 3
+        classNameLabel.textAlignment = .center
+        classNameLabel.text = String(className.trimmingCharacters(in: .whitespaces))
         classNameLabel.tag = 102
+        classNameLabel.textColor = Util.getThemeColor().isLight() ?? true ? UIColor.black : UIColor.white
         
+        if Util.getThemeColor().compareColor(withColor: classNameLabel.textColor, withTolerance: 0.15) { classNameLabel.textColor = .white }
         
-        let classGradeLabel = UILabel(frame: CGRect(x: xpos+button_width-70, y: ypos, width: 70, height: 100))
-        classGradeLabel.font = UIFont(name: "Avenir Heavy", size: 20)
+        let classGradeLabel = UILabel(frame: CGRect(x: position.x, y: position.y + classView.frame.height/2, width: classView.frame.width, height: classView.frame.height/2))
+        classGradeLabel.textAlignment = .center
+        classGradeLabel.font = UIFont(name: "Avenir Next Heavy", size: 23)
         classGradeLabel.tag = 103
         
         
-        if grade >= 93 {classGradeLabel.textColor = UIColor(red: 120/255, green: 190/255, blue: 33/255, alpha: 1)}
-        else if grade >= 85 {classGradeLabel.textColor = UIColor(red: 191/255, green: 64/255, blue: 191/255, alpha: 1)}
-        else if grade >= 75 {classGradeLabel.textColor = UIColor(red: 255/255, green: 191/255, blue: 0/255, alpha: 1)}
-        else if grade >= 65 {classGradeLabel.textColor = UIColor(red: 24/255, green: 88/255, blue: 88/255, alpha: 1)}
+        if grade >= 93 {classGradeLabel.textColor = UIColor(red: 102/255, green: 204/255, blue: 255/255, alpha: 1)}
+        else if grade >= 85 {classGradeLabel.textColor = UIColor(red: 100/255, green: 240/255, blue: 33/255, alpha: 1)}
+        else if grade >= 75 {classGradeLabel.textColor = UIColor(red: 255/255, green: 215/255, blue: 0/255, alpha: 1)}
+        else if grade >= 65 {classGradeLabel.textColor = UIColor(red: 255/255, green: 165/255, blue: 0/255, alpha: 1)}
         else if grade <= 64 && grade > -1 {classGradeLabel.textColor = UIColor(red: 182/255, green: 5/255, blue: 5/255, alpha: 1)}
 
-        classNameLabel.text = String(className)
+        if UserDefaults.standard.bool(forKey: "color-grades") == false { classGradeLabel.textColor = Util.getThemeColor().isLight() ?? true ? UIColor.black : UIColor.white }
+
         classGradeLabel.text = grade > -1 ? "\(grade)%" : "__%"
         
-        if Util.compareColor(color: Util.getThemeColor(), withColor: classGradeLabel.textColor, withTolerance: 0.15) {
+        if Util.getThemeColor().compareColor(withColor: classGradeLabel.textColor, withTolerance: 0.15) {
             classGradeLabel.layer.shadowColor = UIColor.black.cgColor
             classGradeLabel.layer.shadowOpacity = 0.9
             classGradeLabel.layer.shadowOffset = CGSize(width: 1, height: 1)
         }
-        button.setTitle(className, for: .normal)
 
-        scrollView.addSubview(class_view)
+        scrollView.addSubview(classView)
         scrollView.addSubview(classNameLabel)
         scrollView.addSubview(classGradeLabel)
-        scrollView.addSubview(button)
     }
     
-    @objc func logOutAction() {
+    @IBAction func logOut(_ sender: Any) {
         WebpageManager.shared.setPageLoadingStatus(status: .signOut)
         WebpageManager.shared.webView.evaluateJavaScript("document.getElementById('btnLogout').click()")
-        self.dismiss(animated: true)
     }
+}
+extension ClassListViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView,didFinish navigation: WKNavigation!) {
+        let pageManager = WebpageManager.shared
+        if pageManager.getPageLoadingStatus() == .inital {
+            if UserDefaults.standard.string(forKey: "pslink") != nil && UserDefaults.standard.string(forKey: "login-username") != nil{
+                WebpageManager.shared.login(username: AccountManager.global.username, password: AccountManager.global.password)
+                pageManager.setPageLoadingStatus(status: .login)
+            }
+        } else if pageManager.getPageLoadingStatus() == .login {
+            guard let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else {return}
+            loginVC.loadViewIfNeeded()
+            if loggedOut {
+                loggedOut = false
+                WebpageManager.shared.setPageLoadingStatus(status: .login)
+                return
+            }
+            pageManager.checkLogin() { success in
+                if success {
+                    let login_username = AccountManager.global.username
+                    let login_password = AccountManager.global.password
+                    let realmFileName = "\(login_username)_\(login_password.prefix(2))"
+                    
+                    ClassInfoManager.shared.initizialeSchema(username: realmFileName)
+                    ClassInfoManager.shared.addStudentToDatabase(username: login_username)
+
+                    UserDefaults.standard.set(login_username, forKey: "login-username")
+                    if KeychainManager().getPassword(username: login_username) != login_password {
+                        do {
+                            try KeychainManager().saveLogin(service: "powerschool-helper.com", account: login_username, password: Data(login_password.utf8))
+                        } catch {
+                            KeychainManager().updatePassword(username: login_username, newPassword: login_password)
+                        }
+                    }
+                    self.dismiss(animated: true)
+                    self.setClassLabels() { _ in}
+                    Util.hideLoading(view: loginVC.view)
+                    WebpageManager.shared.setPageLoadingStatus(status: .classList)
+                } else {
+                    WebpageManager.shared.setPageLoadingStatus(status: .login)
+                    if self.presentedViewController != nil {
+                        let presentVC = self.presentedViewController as! LoginViewController
+                        presentVC.invalidLogin.isHidden = false
+                        Util.hideLoading(view: presentVC.view)
+                    } else {
+                        self.present(loginVC, animated: true) }
+                }
+            }
+        } else if pageManager.getPageLoadingStatus() == .classInfo { pageManager.setPageLoadingStatus(status: .classList)
+        } else if pageManager.getPageLoadingStatus() == .signOut {
+            guard let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else {return}
+            self.present(loginVC, animated: true)
+            loggedOut = true
+            pageManager.setPageLoadingStatus(status: .login)
+            self.toggleSideMenu()
+        }
+    }
+}
+
+extension UIView {
+    func addOverlay(color: UIColor) {
+        let gradient = CAGradientLayer()
+        gradient.type = .axial
+        gradient.colors = [
+            Util.getThemeColor().withAlphaComponent(0.7).cgColor,
+            Util.getThemeColor().cgColor,
+        ]
+        gradient.locations = [ 0.0, 1.0]
+        gradient.frame = self.bounds
+        gradient.cornerRadius = 10
+        self.layer.addSublayer(gradient)
+    }
+    
+    func dropShadow() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.6
+        layer.shadowOffset = CGSize(width: 5, height: 5)
+    }
+}
+
+
+class MyTapGesture: UITapGestureRecognizer {
+    var className = ""
 }

@@ -6,6 +6,7 @@
 //
 
 
+import RealmSwift
 import UIKit
 import SwiftSoup
 import SwiftUI
@@ -13,210 +14,188 @@ import SwiftUI
 class ClassInfoController: UIViewController {
     
     @IBOutlet weak var classLabel: UILabel!
-    @IBOutlet weak var gradeLabel: UILabel!
     @IBOutlet weak var GPALabel: UILabel!
     @IBOutlet weak var pointsLabel: UILabel!
     @IBOutlet weak var needPercentLabel: UILabel!
     @IBOutlet weak var teacherLabel: UILabel!
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var assignmentsLabel: UILabel!
-    @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var needLetterLabel: UILabel!
-    @IBOutlet weak var gradeHistoryButton: UIButton!
-    @IBOutlet weak var assignmentsBackground: UIView!
-    @IBOutlet weak var showAllAssignmentsButton: UIButton!
+    @IBOutlet weak var assignmentsLabel: UILabel!
+    @IBOutlet weak var myTable: UITableView!
+    @IBOutlet weak var gradeLetterLabel: UILabel!
+    @IBOutlet weak var gradeLetterPlusLabel: UILabel!
+    @IBOutlet weak var detailedGradeLabel: UILabel!
+    @IBOutlet weak var gradeLabel: UILabel!
     
+    var selectedClass = ""
+    var selectedQuarter = 1
+    var selectedhref = ""
     
+    var username = ""
+    var password = ""
+    
+    var classType = AccountManager.global.classType
+    var doc = SwiftSoup.Document("")
+    
+    let KeyChainManager = KeychainManager()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        selectedClass = AccountManager.global.selectedClass
+        selectedhref = AccountManager.global.selectedhref
+        selectedQuarter = AccountManager.global.selectedQuarter
         classLabel.textColor = Util.getThemeColor()
         assignmentsLabel.textColor = Util.getThemeColor()
-        backButton.tintColor = Util.getThemeColor()
-        showAllAssignmentsButton.tintColor = Util.getThemeColor()
-        gradeHistoryButton.tintColor = Util.getThemeColor()
-        backgroundView.layer.cornerRadius = 10
-        assignmentsBackground.layer.cornerRadius = 10
-    }
     
-    private var htmlString = ""
-    private var selectedClass = ""
-    
-    @objc func tappedAssignments(_ gesture: UITapGestureRecognizer) {
-        guard let assignmentVC = self.storyboard?.instantiateViewController(withIdentifier: "AssignmentViewController") as? AssignmentViewController else {return}
-        assignmentVC.assignments = ClassDataManager.shared.getClassData(className: selectedClass, type: "assignments") as! [[String : String]]
-        self.present(assignmentVC, animated: true, completion:nil)
-    }
-    
-    @IBAction func dismissView(_ sender: Any) {
-        self.dismiss(animated: true)
-    }
-    
-    
-    func goToMainPage() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            if (WebpageManager.shared.webView.canGoBack) {WebpageManager.shared.webView.goBack()}
-        }
-    }
+        username = UserDefaults.standard.string(forKey: "login-username") ?? "ERROR"
+        password = KeyChainManager.getPassword(username: username)
         
-    func setGPALabel(grade: Int) {
-        GPALabel.text = "GPA: " + String(Util.findGPA(grade: grade))
-    }
-    func setClassLabel(text : String) {
-        ClassDataManager.shared.addData(className: text, type: "class_name", data: text)
-        classLabel.text = text
-        selectedClass = text
-    }
-    func setGradeLabel() {
-        if !NetworkMonitor.shared.isConnected {
-            let grade: Int = ClassDataManager.shared.getClassData(className: selectedClass, type: "grade") as! Int
-            let weightedGrade: Int = ClassDataManager.shared.getClassData(className: selectedClass, type: "weighted_grade") as! Int
-            gradeLabel.text = "Grade: \(grade) | \(weightedGrade) (\(Util.findGradeLetterSP(grade: weightedGrade)))"
-            return
+        if NetworkMonitor.shared.isConnected {
+            WebpageManager.shared.webView.evaluateJavaScript("document.body.innerHTML") { [self]result, error in
+                guard let html = result as? String, error == nil else {return}
+                doc = try! SwiftSoup.parseBodyFragment(html)
+                setClassInfo(doc: doc)
+            }
         }
-        do {
-            let doc: Document = try SwiftSoup.parseBodyFragment(htmlString)
-            let table: Element = try doc.select(".linkDescList")[0]
-            let tds: Elements = try table.select("td")
-            let grade: String = try tds[4].text()
-            let regular_grade:Int = Int(grade.suffix(4).replacingOccurrences(of: "%", with: "").trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0
-            let weighted_grade:Int = Int(grade.prefix(3).trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0
-            gradeLabel.text = "Grade: \(regular_grade) | \(weighted_grade) (\(Util.findGradeLetterSP(grade: weighted_grade)))"
+        myTable.layer.cornerRadius = 10
+        myTable.backgroundColor = .black
+    }
+    func setClassInfo(doc: SwiftSoup.Document) {
+        let classType = ClassType(username: AccountManager.global.username, className: selectedClass, quarter: self.selectedQuarter, href: selectedhref)
+        let classData = ClassData(isUpdated: false, classType: classType, doc: doc)
+        if AccountManager.global.updatedClasses.contains("\(selectedClass)_\(selectedQuarter)") {
+            classData.isUpdated = true }
 
-        } catch {
-            print("Error")
-        }
-    }
-    
-    func getLatestAssignments() {
-        if !NetworkMonitor.shared.isConnected {
-            let assignments = ClassDataManager.shared.getClassData(className: selectedClass, type: "assignments") as? [[String : String]] ?? []
-            if !assignments.isEmpty {setLatestAssignmentLabels(assignments: assignments)}
-            return
-        }
-        do {
-            let doc: Document = try SwiftSoup.parseBodyFragment(htmlString)
-            let main: Element = try doc.select(".xteContentWrapper")[0]
-            let ngscope: Element = try main.select(".ng-scope")[0]
-            let trs: Elements = try ngscope.select("tr")
-            var assignmentList: [[String : String]] = []
-            for tr in trs {
-                let tds: Elements = try tr.select("td")
-                if tds.size() < 10 {continue}
-                let assignment: String = try tds[2].select("span").text()
-                let score: String = try tds[10].text()
-                let date: String = try tds[0].text()
-                var assignmentInfo : [String : String] = [
-                    "assignment" : assignment,
-                    "score" : score,
-                    "flags" : getAssignemntFlags(tds: tds),
-                    "date" : date
-                ]
-                assignmentList.append(assignmentInfo)
-            }
-            setLatestAssignmentLabels(assignments: assignmentList)
-            
-            ClassDataManager.shared.addData(className: selectedClass, type: "assignments", data: assignmentList)
-            UserDefaults.standard.set(ClassDataManager.shared.classes_info, forKey: "class_data_list")
-            goToMainPage()
-        } catch {
-            print("Error")
-        }
-    }
-    
-    func setLatestAssignmentLabels(assignments: [[String : String]]) {
-        let backgroundViewY: Int = Int(assignmentsBackground.frame.minY) + 10
-        let maxAssignments = UIDevice.current.userInterfaceIdiom == .phone ? 5 : 20
+        classLabel.text = selectedClass
+        gradeLetterLabel.text = classData.getGradeLetter()
         
-        for i in 0...maxAssignments-1 {
-            if i > assignments.count-1 {break}
-            let assignment = assignments[i]
-            let assignmentLabel: UILabel = UILabel(frame: CGRect(x: 15, y: 52*i + backgroundViewY, width: Int(assignmentsBackground.frame.width-10), height: 45))
-            assignmentLabel.text = "• " + assignment["assignment"]! + " (" + assignment["score"]! + ")"
-            assignmentLabel.textColor = Util.setFlagColor(flag: assignment["flags"]!)
-            assignmentLabel.backgroundColor = .clear
-            assignmentLabel.numberOfLines = 2
-            assignmentLabel.font = UIFont(name: "Verdana Bold", size: 17)
-            
-            let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedAssignments(_:)))
-            gestureRecognizer.numberOfTapsRequired = 1
-            gestureRecognizer.numberOfTouchesRequired = 1
-            assignmentLabel.addGestureRecognizer(gestureRecognizer)
-            assignmentLabel.isUserInteractionEnabled = true
-            
-            backgroundView.addSubview(assignmentLabel)
-        }
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedAssignments(_:)))
-        gestureRecognizer.numberOfTapsRequired = 1
-        gestureRecognizer.numberOfTouchesRequired = 1
-        assignmentsBackground.addGestureRecognizer(gestureRecognizer)
-        assignmentsBackground.isUserInteractionEnabled = true
-        
-    }
-    
-    func getAssignemntFlags(tds : Elements) -> String {
-        var flags: String = ""
-        do {
-            for i in 3...9 {
-                let div = try tds[i].select(".ps-icon")
-                if div.count > 0 {flags = String(i)}
-            }
-        } catch {print("Error")}
-        return flags
-    }
-    
-    func setPointsNeeded(total: Float, recieved: Float) {
-        if (total/recieved).isNaN {return}
-        
-        let grade: Float = round(Float(recieved/total)*100)
-        let initialGradeLetter = Util.findGradeLetter(grade: Int(grade))
-        
-        var tempGradeLetter = initialGradeLetter
-        var tempgrade = Float(grade)
-        
-        var pointsAddedPercent: Float = 0.0
-        var pointsAddedLetter: Float = 0.0
+        let grades = classData.getGrade()
+        gradeLabel.text = "\(grades[0])% | \(grades[1])%"
 
-        if grade < 100 {
-            while Int(grade) == Int(tempgrade) {
-                pointsAddedPercent += 1.0
-                tempgrade = round(Float((pointsAddedPercent + recieved)/(pointsAddedPercent + total))*100)
-            }
-        }
+        GPALabel.text = "GPA: " + String(Util.findGPA(grade: classData.getGrade()[0]))
+        teacherLabel.text = "Teacher: \(classData.getTeacher())"
+   
+        let points = classData.getPoints()
+
+        pointsLabel.text = "Points: \(points[0]) / \(points[1])"
+        let needPointsData = classData.getPointsNeeded()
+        needPercentLabel.text = "Need (\(needPointsData[0])%): \(needPointsData[1])"
+        needLetterLabel.text = "Need (\(needPointsData[2])): \(needPointsData[3])"
         
-        if initialGradeLetter != "A" {
-            while initialGradeLetter == tempGradeLetter {
-                pointsAddedLetter += 1.0
-                let tempgrade1 = round(Float((pointsAddedLetter + recieved)/(pointsAddedLetter + total))*100)
-                tempGradeLetter = Util.findGradeLetter(grade: Int(tempgrade1))
-            }
-        }
+        let _ = classData.getAssignments()
+        myTable.delegate = self
+        myTable.dataSource = self
+        myTable.reloadData()
         
-        needPercentLabel.text = "Need (%): \(pointsAddedPercent) (\(Int(tempgrade))%)"
-        needLetterLabel.text = "Need (L): \(pointsAddedLetter) (\(tempGradeLetter))"
+        let detailedGrades = classData.getDetailedGrade(recieved: points[0], total: points[1])
+        detailedGradeLabel.text = "\(detailedGrades[0])% | \(detailedGrades[1])%"
+
+        WebpageManager.shared.setPageLoadingStatus(status: .classList)
+        AccountManager.global.updatedClasses.append("\(selectedClass)_\(selectedQuarter)")
+        if WebpageManager.shared.wasLoopingClasses {
+            WebpageManager.shared.isLoopingClasses = true
+            WebpageManager.shared.loopThroughClasses(index: AccountManager.global.classIndexToUpdate)
+        }
+    }
+}
+
+
+class ClassData {
+    init(isUpdated: Bool, classType: ClassType, doc: SwiftSoup.Document) {
+        self.isUpdated = isUpdated
+        self.classType = classType
+        self.doc = doc
     }
     
+    var classType = ClassType(username: "", className: "", quarter: 0, href: "")
+    var doc = SwiftSoup.Document("")
+    var isUpdated = false
     
-    
-    func setPointsLabel() {
-        if !NetworkMonitor.shared.isConnected {
-            let received: Float = ClassDataManager.shared.getClassData(className: selectedClass, type: "received") as! Float
-            let total: Float = ClassDataManager.shared.getClassData(className: selectedClass, type: "total") as! Float
-
-            pointsLabel.text = "Points: \(received) / \(total)"
-            self.setPointsNeeded(total: total, recieved: received)
-            self.setGradeLabel()
-            self.getLatestAssignments()
-            self.setTeacherLabel()
-            return
-        }
-        WebpageManager.shared.webView.evaluateJavaScript("document.body.innerHTML") { [self]result, error in
-            guard let html = result as? String, error == nil else {return}
+    func getGradeLetter() -> String {
+        var unweightedGrade: Int = 0
+        if isUpdated {
+            unweightedGrade = ClassInfoManager.shared.getClassData(classType: classType, type: .grade) as! Int
+        } else {
             do {
-                htmlString = html
-                let doc: Document = try SwiftSoup.parseBodyFragment(html)
-                setTeacherLabel()
+                let table: Element = try doc.select(".linkDescList")[0]
+                let tds: Elements = try table.select("td")
+                let grade: String = try tds[4].text()
+                unweightedGrade = Int(grade.suffix(4).replacingOccurrences(of: "%", with: "").trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0
+            } catch {
+                print("Error")
+            }
+        }
+        let letterGrade = Util.findGradeLetterSP(grade: unweightedGrade)
+        ClassInfoManager.shared.setClassData(classType: classType, type: .letterGrade, value: letterGrade)
 
+        return letterGrade
+        
+    }
+    
+    func getGrade() -> [Int] {
+        var unweightedGrade: Int = 0
+        var weightedGrade: Int = 0
+        if isUpdated {
+            unweightedGrade = ClassInfoManager.shared.getClassData(classType: classType, type: .grade) as! Int
+            weightedGrade = ClassInfoManager.shared.getClassData(classType: classType, type: .weightedGrade) as! Int
+        } else {
+            do {
+                let table: Element = try doc.select(".linkDescList")[0]
+                let tds: Elements = try table.select("td")
+                let grade: String = try tds[4].text()
+                unweightedGrade = Int(grade.suffix(4).replacingOccurrences(of: "%", with: "").trimmingCharacters(in: .whitespacesAndNewlines)) ?? -1
+                weightedGrade = Int(grade.prefix(3).trimmingCharacters(in: .whitespacesAndNewlines)) ?? -1
+                ClassInfoManager.shared.setClassData(classType: classType, type: .grade, value: unweightedGrade)
+                ClassInfoManager.shared.setClassData(classType: classType, type: .weightedGrade, value: weightedGrade)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return [unweightedGrade, weightedGrade]
+    }
+    
+    
+    func getDetailedGrade(recieved: Float, total: Float) -> [Float] {
+        let grade = ClassInfoManager.shared.getClassData(classType: classType, type: .grade) as! Int
+        let weightedGrade = ClassInfoManager.shared.getClassData(classType: classType, type: .weightedGrade) as! Int
+        let detailedGrade = round(recieved / total * 10000) / 100
+        let weight = (weightedGrade-grade)%5 != 0 ? 0 : weightedGrade-grade
+        ClassInfoManager.shared.setClassData(classType: classType, type: .detailedGrade, value: detailedGrade)
+        return [Float(detailedGrade), Float(detailedGrade + Float(weight))]
+    }
+    
+    func getTeacher() -> String {
+        var teacherName = ""
+        if isUpdated {
+            teacherName = ClassInfoManager.shared.getClassData(classType: classType, type: .teacher) as! String
+        } else {
+            do {
+                let table: Element = try doc.select(".linkDescList")[0]
+                let tds: Elements = try table.select("td")
+                let teacher: String = try tds[1].text()
+                let teacher_first: String = teacher.components(separatedBy:",")[1]
+                let teacher_last: String = teacher.components(separatedBy:",")[0]
+                teacherName = "\(teacher_first) \(teacher_last)"
+                ClassInfoManager.shared.setClassData(classType: classType, type: .teacher, value: teacherName)
+            } catch {
+                print("Error")
+            }
+        }
+        
+        return teacherName
+        
+    }
+        
+    func getPoints() -> [Float] {
+        var received: Float = 0.0
+        var total: Float = 0.0
+        
+        if isUpdated {
+            received = ClassInfoManager.shared.getClassData(classType: classType, type: .received) as! Float
+            total = ClassInfoManager.shared.getClassData(classType: classType, type: .total) as! Float
+        } else {
+            do {
                 let main: Element = try doc.select(".xteContentWrapper")[0]
                 let ngscope: Element = try main.select(".ng-scope")[0]
                 let trs: Elements = try ngscope.select("tr")
@@ -232,58 +211,125 @@ class ClassInfoController: UIViewController {
                     totalPoints += Float(pointTD.split(separator: "/")[1]) ?? 0.0
                     recivedPoints += Float(pointTD.split(separator: "/")[0]) ?? 0.0
                 }
-                ClassDataManager.shared.addData(className: selectedClass, type: "received", data: recivedPoints)
-                ClassDataManager.shared.addData(className: selectedClass, type: "total", data: totalPoints)
-                pointsLabel.text = "Points: " + String(recivedPoints) + "/" + String(totalPoints)
-                self.setPointsNeeded(total: totalPoints, recieved: recivedPoints)
-                self.setGradeLabel()
-                self.getLatestAssignments()
-                
+                received = recivedPoints
+                total = totalPoints
+                ClassInfoManager.shared.setClassData(classType: classType, type: .received, value: received)
+                ClassInfoManager.shared.setClassData(classType: classType, type: .total, value: total)
             } catch {
                 print("error")
             }
         }
-    }
-    func setTeacherLabel() {
-        if !NetworkMonitor.shared.isConnected {
-            let teacher: String = ClassDataManager.shared.getClassData(className: selectedClass, type: "teacher") as! String
-            teacherLabel.text = "Teacher: \(teacher)"
-            return
-        }
-        do {
-            let doc: Document = try SwiftSoup.parseBodyFragment(htmlString)
-            let table: Element = try doc.select(".linkDescList")[0]
-            let tds: Elements = try table.select("td")
-            let teacher: String = try tds[1].text()
-            let teacher_first: String = teacher.components(separatedBy:",")[1]
-            let teacher_last: String = teacher.components(separatedBy:",")[0]
-            ClassDataManager.shared.addData(className: selectedClass, type: "teacher", data: "\(teacher_first) \(teacher_last)")
-            teacherLabel.text = "Teacher: \(teacher_first) \(teacher_last)"
-        } catch {
-            print("Error")
-        }
+        return [received, total]
     }
     
-    @IBAction func showGradeChart(_ sender: Any) {
-        let nameScreenData = NameScreenData()
-        var gradePointData: [[[String : String]]] = []
+    func getPointsNeeded() -> [String] {
+        let received = ClassInfoManager.shared.getClassData(classType: classType, type: .received) as! Float
+        let total = ClassInfoManager.shared.getClassData(classType: classType, type: .total) as! Float
+        
+        if (total/received).isNaN {return ["", "", "", ""]}
+        
+        let grade: Float = round(Float(received/total)*100)
+        let initialGradeLetter = Util.findGradeLetter(grade: Int(grade))
+        
+        var tempGradeLetter = initialGradeLetter
+        var tempgrade = Float(grade)
+        
+        var pointsAddedPercent: Float = 0.0
+        var pointsAddedLetter: Float = 0.0
+        
+        if grade < 100 {
+            while Int(grade) == Int(tempgrade) {
+                pointsAddedPercent += 1.0
+                tempgrade = round(Float((pointsAddedPercent + received)/(pointsAddedPercent + total))*100)
+            }
+        }
+        
+        if initialGradeLetter != "A" {
+            while initialGradeLetter == tempGradeLetter {
+                pointsAddedLetter += 1.0
+                let tempgrade1 = round(Float((pointsAddedLetter + received)/(pointsAddedLetter + total))*100)
+                tempGradeLetter = Util.findGradeLetter(grade: Int(tempgrade1))
+            }
+        }
+        ClassInfoManager.shared.setClassData(classType: classType, type: .needPointsLetter, value: pointsAddedLetter)
+        ClassInfoManager.shared.setClassData(classType: classType, type: .needPointsPercent, value: pointsAddedPercent)
 
-        let assignments = ClassDataManager.shared.getClassData(className: selectedClass, type: "assignments") as? [[String : String]] ?? []
-        gradePointData.append(GradeChartManager().getGradePointDataList(timeBack: 7, assignments: assignments))
-        gradePointData.append(GradeChartManager().getGradePointDataList(timeBack: 14, assignments: assignments))
-        gradePointData.append(GradeChartManager().getGradePointDataList(timeBack: 30, assignments: assignments))
-        
-        nameScreenData.assignments = gradePointData
-        
-        let gradeChartVC = UIHostingController(rootView: GradeChartView().environmentObject(nameScreenData))
-        gradeChartVC.modalPresentationStyle = .fullScreen
-        self.present(gradeChartVC, animated: true)
+        return [String(tempgrade), String(pointsAddedPercent), String(tempGradeLetter), String(pointsAddedLetter)]
     }
     
     
-    @IBAction func showAllAssignments(_ sender: Any) {
-        guard let assignmentVC = self.storyboard?.instantiateViewController(withIdentifier: "AssignmentViewController") as? AssignmentViewController else {return}
-        assignmentVC.assignments = ClassDataManager.shared.getClassData(className: selectedClass, type: "assignments") as! [[String : String]]
-        self.present(assignmentVC, animated: true, completion:nil)
+    func getAssignments() -> RealmSwift.List<Assignments> {
+        if isUpdated == false {
+            do {
+                let main: Element = try doc.select(".xteContentWrapper")[0]
+                let ngscope: Element = try main.select(".ng-scope")[0]
+                let trs: Elements = try ngscope.select("tr")
+                for tr in trs {
+                    let tds: Elements = try tr.select("td")
+                    if tds.size() < 10 {continue}
+                    let name: String = try tds[2].select("span").text()
+                    let score: String = try tds[10].text()
+                    let date: String = try tds[0].text()
+                    let customid = "\(name)_\(date)"
+                    guard let dataAssignment = ClassInfoManager.shared.realm!.object(ofType: Assignments.self, forPrimaryKey: customid) else {
+                        let assignment = Assignments(name: name, score: score, flags: getAssignemntFlags(tds: tds), date: date)
+                        ClassInfoManager.shared.setClassData(classType: classType, type: .assignments, value: assignment)
+                        continue
+                    }
+                    if dataAssignment.score != score || dataAssignment.flags != getAssignemntFlags(tds: tds) || dataAssignment.date != date {
+                        ClassInfoManager.shared.updateAssignment(classType: classType, customid: customid, newScore: score, flags: getAssignemntFlags(tds: tds), date: date)
+                    }
+                }
+            } catch {
+                print("Error")
+            }
+        }
+        AccountManager.global.assignments = ClassInfoManager.shared.getClassData(classType: classType, type: .assignments) as? RealmSwift.List<Assignments> ?? RealmSwift.List<Assignments>()
+        return ClassInfoManager.shared.getClassData(classType: classType, type: .assignments) as! RealmSwift.List<Assignments>
+    }
+   
+    private func getAssignemntFlags(tds : Elements) -> String {
+        var flags: String = ""
+        do {
+            for i in 3...9 {
+                let div = try tds[i].select(".ps-icon")
+                if div.count > 0 {flags += String(i)}
+            }
+        } catch {print("Error")}
+        return flags
+    }
+}
+
+extension ClassInfoController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let assignments = AccountManager.global.assignments
+        if assignments.count < 3 {
+            return assignments.count }
+        else{return 3}
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let assignments = AccountManager.global.assignments
+        tableView.separatorColor = .darkGray
+        let cell = myTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = .black
+    
+        
+        var cellConfig = cell.defaultContentConfiguration()
+        cellConfig.textProperties.numberOfLines = 0
+        cellConfig.textProperties.lineBreakMode = .byWordWrapping
+        cellConfig.textProperties.color = .white
+        cellConfig.textProperties.font = UIFont(name: "Verdana Bold", size: 15)!
+        let assignment = assignments[indexPath.row]
+        cellConfig.text = "\(assignment.name) (\(assignment.score))"
+        cell.contentConfiguration = cellConfig
+        cell.selectionStyle = .none
+        return cell
+    }
+}
+
+extension Float {
+    var clean : String {
+        return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
     }
 }

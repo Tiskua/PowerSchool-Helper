@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A7BE654E66837F7AE112D5F1 /* Pods_PowerSchool_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC92879FE0294CA95C7C0C85 /* Pods_PowerSchool_Helper.framework */; };
 		DB001048294A5D6C00318B03 /* RotatingCircleIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB001047294A5D6B00318B03 /* RotatingCircleIndicator.swift */; };
 		DB1781442954E729002DBB93 /* NetoworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1781432954E729002DBB93 /* NetoworkMonitor.swift */; };
 		DB17814829552558002DBB93 /* WebPageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB17814729552558002DBB93 /* WebPageManager.swift */; };
@@ -14,24 +15,28 @@
 		DB726F3928EA596B00AF5F41 /* ClassInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB726F3828EA596B00AF5F41 /* ClassInfoViewController.swift */; };
 		DB8E86B02958F68C004D3A7D /* ClassDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8E86AF2958F68C004D3A7D /* ClassDataManager.swift */; };
 		DB8E86B2295A57A7004D3A7D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB8E86B1295A57A7004D3A7D /* Main.storyboard */; };
+		DB8E8BDF29CB3896006A1EED /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8E8BDE29CB3896006A1EED /* KeyChain.swift */; };
+		DB8EE3B429ABE109004CE37F /* QuarterSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8EE3B329ABE109004CE37F /* QuarterSelectionController.swift */; };
 		DB96D29128C27E6300C36782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB96D29028C27E6300C36782 /* AppDelegate.swift */; };
 		DB96D29328C27E6300C36782 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB96D29228C27E6300C36782 /* SceneDelegate.swift */; };
-		DB96D29528C27E6300C36782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB96D29428C27E6300C36782 /* ViewController.swift */; };
+		DB96D29528C27E6300C36782 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB96D29428C27E6300C36782 /* LoginViewController.swift */; };
 		DB96D29A28C27E6600C36782 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB96D29928C27E6600C36782 /* Assets.xcassets */; };
 		DB96D29D28C27E6600C36782 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB96D29B28C27E6600C36782 /* LaunchScreen.storyboard */; };
+		DB9C45CE29CCC38E00953EB8 /* ClassInfoBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C45CD29CCC38E00953EB8 /* ClassInfoBarVC.swift */; };
 		DBA1B65B2927B60B004D15FE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA1B65A2927B60B004D15FE /* SettingsViewController.swift */; };
 		DBBC6AFE294EBD35006BF7D1 /* GradeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC6AFD294EBD35006BF7D1 /* GradeChartView.swift */; };
 		DBBC6B04294EC18B006BF7D1 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = DBBC6B03294EC18B006BF7D1 /* SwiftUICharts */; };
 		DBBC6B06294EC90B006BF7D1 /* GradeChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC6B05294EC90B006BF7D1 /* GradeChartManager.swift */; };
+		DBD8C62F29F1AB370074F225 /* ClassInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBD8C62E29F1AB370074F225 /* ClassInfo.storyboard */; };
+		DBD8C63129F1ABE30074F225 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBD8C63029F1ABE30074F225 /* Settings.storyboard */; };
 		DBDE1515290495F10027A22D /* AssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDE1514290495F10027A22D /* AssignmentViewController.swift */; };
 		DBE4E875293560F2001C4ACB /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E874293560F2001C4ACB /* Util.swift */; };
-		E7A037F83251A96FECC9607A /* Pods_PowerSchool_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FF55696D159C114F8B5E8 /* Pods_PowerSchool_Helper.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		258FF55696D159C114F8B5E8 /* Pods_PowerSchool_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PowerSchool_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		41AF5D8B825EBC70E3D37C12 /* Pods-PowerSchool Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerSchool Helper.debug.xcconfig"; path = "Target Support Files/Pods-PowerSchool Helper/Pods-PowerSchool Helper.debug.xcconfig"; sourceTree = "<group>"; };
-		4D598C3ED684F3C4CF597EFF /* Pods-PowerSchool Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerSchool Helper.release.xcconfig"; path = "Target Support Files/Pods-PowerSchool Helper/Pods-PowerSchool Helper.release.xcconfig"; sourceTree = "<group>"; };
+		36107F68D1A40CC3C2541EFF /* Pods-PowerSchool Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerSchool Helper.debug.xcconfig"; path = "Target Support Files/Pods-PowerSchool Helper/Pods-PowerSchool Helper.debug.xcconfig"; sourceTree = "<group>"; };
+		95BC8B7978C9DE8AF5012F64 /* Pods-PowerSchool Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerSchool Helper.release.xcconfig"; path = "Target Support Files/Pods-PowerSchool Helper/Pods-PowerSchool Helper.release.xcconfig"; sourceTree = "<group>"; };
+		CC92879FE0294CA95C7C0C85 /* Pods_PowerSchool_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PowerSchool_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB001047294A5D6B00318B03 /* RotatingCircleIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotatingCircleIndicator.swift; sourceTree = "<group>"; };
 		DB1781432954E729002DBB93 /* NetoworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetoworkMonitor.swift; sourceTree = "<group>"; };
 		DB17814729552558002DBB93 /* WebPageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageManager.swift; sourceTree = "<group>"; };
@@ -39,16 +44,22 @@
 		DB726F3828EA596B00AF5F41 /* ClassInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassInfoViewController.swift; sourceTree = "<group>"; };
 		DB8E86AF2958F68C004D3A7D /* ClassDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDataManager.swift; sourceTree = "<group>"; };
 		DB8E86B1295A57A7004D3A7D /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		DB8E8BDE29CB3896006A1EED /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
+		DB8EE38B29AAFE54004CE37F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB8EE3B329ABE109004CE37F /* QuarterSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuarterSelectionController.swift; sourceTree = "<group>"; };
 		DB96D28D28C27E6300C36782 /* PowerSchool Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PowerSchool Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB96D29028C27E6300C36782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB96D29228C27E6300C36782 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DB96D29428C27E6300C36782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DB96D29428C27E6300C36782 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DB96D29928C27E6600C36782 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB96D29C28C27E6600C36782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		DB96D29E28C27E6600C36782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB9C45CD29CCC38E00953EB8 /* ClassInfoBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInfoBarVC.swift; sourceTree = "<group>"; };
 		DBA1B65A2927B60B004D15FE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DBBC6AFD294EBD35006BF7D1 /* GradeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeChartView.swift; sourceTree = "<group>"; };
 		DBBC6B05294EC90B006BF7D1 /* GradeChartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeChartManager.swift; sourceTree = "<group>"; };
+		DBC659DE29B420D1002419D6 /* PowerSchool Helper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PowerSchool Helper.entitlements"; sourceTree = "<group>"; };
+		DBD8C62E29F1AB370074F225 /* ClassInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ClassInfo.storyboard; sourceTree = "<group>"; };
+		DBD8C63029F1ABE30074F225 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		DBDE1514290495F10027A22D /* AssignmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentViewController.swift; sourceTree = "<group>"; };
 		DBE4E874293560F2001C4ACB /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,8 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7A037F83251A96FECC9607A /* Pods_PowerSchool_Helper.framework in Frameworks */,
 				DBBC6B04294EC18B006BF7D1 /* SwiftUICharts in Frameworks */,
+				A7BE654E66837F7AE112D5F1 /* Pods_PowerSchool_Helper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,8 +80,8 @@
 		A5D4FA68F4644560DA344A23 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				41AF5D8B825EBC70E3D37C12 /* Pods-PowerSchool Helper.debug.xcconfig */,
-				4D598C3ED684F3C4CF597EFF /* Pods-PowerSchool Helper.release.xcconfig */,
+				36107F68D1A40CC3C2541EFF /* Pods-PowerSchool Helper.debug.xcconfig */,
+				95BC8B7978C9DE8AF5012F64 /* Pods-PowerSchool Helper.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -78,12 +89,13 @@
 		DB17814529552409002DBB93 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				DB96D29428C27E6300C36782 /* ViewController.swift */,
+				DB96D29428C27E6300C36782 /* LoginViewController.swift */,
 				DBA1B65A2927B60B004D15FE /* SettingsViewController.swift */,
 				DB18A40428C816AB0034037F /* ClassListViewController.swift */,
 				DB726F3828EA596B00AF5F41 /* ClassInfoViewController.swift */,
 				DBDE1514290495F10027A22D /* AssignmentViewController.swift */,
-				DBBC6B05294EC90B006BF7D1 /* GradeChartManager.swift */,
+				DB8EE3B329ABE109004CE37F /* QuarterSelectionController.swift */,
+				DB9C45CD29CCC38E00953EB8 /* ClassInfoBarVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -97,6 +109,8 @@
 				DB1781432954E729002DBB93 /* NetoworkMonitor.swift */,
 				DB17814729552558002DBB93 /* WebPageManager.swift */,
 				DB8E86AF2958F68C004D3A7D /* ClassDataManager.swift */,
+				DBBC6B05294EC90B006BF7D1 /* GradeChartManager.swift */,
+				DB8E8BDE29CB3896006A1EED /* KeyChain.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -116,7 +130,7 @@
 				DB96D28F28C27E6300C36782 /* PowerSchool Helper */,
 				DB96D28E28C27E6300C36782 /* Products */,
 				A5D4FA68F4644560DA344A23 /* Pods */,
-				F0CA42CA2D121BE3923FBEB7 /* Frameworks */,
+				FA8B00ADCABD99065C9BCAB5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,21 +145,32 @@
 		DB96D28F28C27E6300C36782 /* PowerSchool Helper */ = {
 			isa = PBXGroup;
 			children = (
+				DBD8C62D29F1AAFE0074F225 /* Storyboards */,
+				DBC659DE29B420D1002419D6 /* PowerSchool Helper.entitlements */,
 				DB178146295524E5002DBB93 /* Utility */,
 				DB17814529552409002DBB93 /* ViewControllers */,
 				DB178149295534D2002DBB93 /* Views */,
 				DB96D29928C27E6600C36782 /* Assets.xcassets */,
-				DB96D29B28C27E6600C36782 /* LaunchScreen.storyboard */,
-				DB96D29E28C27E6600C36782 /* Info.plist */,
-				DB8E86B1295A57A7004D3A7D /* Main.storyboard */,
+				DB8EE38B29AAFE54004CE37F /* Info.plist */,
 			);
 			path = "PowerSchool Helper";
 			sourceTree = "<group>";
 		};
-		F0CA42CA2D121BE3923FBEB7 /* Frameworks */ = {
+		DBD8C62D29F1AAFE0074F225 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				258FF55696D159C114F8B5E8 /* Pods_PowerSchool_Helper.framework */,
+				DB8E86B1295A57A7004D3A7D /* Main.storyboard */,
+				DBD8C62E29F1AB370074F225 /* ClassInfo.storyboard */,
+				DBD8C63029F1ABE30074F225 /* Settings.storyboard */,
+				DB96D29B28C27E6600C36782 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		FA8B00ADCABD99065C9BCAB5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CC92879FE0294CA95C7C0C85 /* Pods_PowerSchool_Helper.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -157,11 +182,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DB96D2A128C27E6600C36782 /* Build configuration list for PBXNativeTarget "PowerSchool Helper" */;
 			buildPhases = (
-				83CDFBC7CFFAEFFA053D3107 /* [CP] Check Pods Manifest.lock */,
+				47571CDCB2A4D500FCEA6674 /* [CP] Check Pods Manifest.lock */,
 				DB96D28928C27E6300C36782 /* Sources */,
 				DB96D28A28C27E6300C36782 /* Frameworks */,
 				DB96D28B28C27E6300C36782 /* Resources */,
-				55203386E1738107658A22F2 /* [CP] Embed Pods Frameworks */,
+				48B1D771E6A1AA9E24B242C1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -217,32 +242,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB8E86B2295A57A7004D3A7D /* Main.storyboard in Resources */,
+				DBD8C62F29F1AB370074F225 /* ClassInfo.storyboard in Resources */,
 				DB96D29D28C27E6600C36782 /* LaunchScreen.storyboard in Resources */,
 				DB96D29A28C27E6600C36782 /* Assets.xcassets in Resources */,
+				DBD8C63129F1ABE30074F225 /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		55203386E1738107658A22F2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PowerSchool Helper/Pods-PowerSchool Helper-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PowerSchool Helper/Pods-PowerSchool Helper-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PowerSchool Helper/Pods-PowerSchool Helper-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		83CDFBC7CFFAEFFA053D3107 /* [CP] Check Pods Manifest.lock */ = {
+		47571CDCB2A4D500FCEA6674 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -264,6 +274,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		48B1D771E6A1AA9E24B242C1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PowerSchool Helper/Pods-PowerSchool Helper-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PowerSchool Helper/Pods-PowerSchool Helper-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PowerSchool Helper/Pods-PowerSchool Helper-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -272,10 +299,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB17814829552558002DBB93 /* WebPageManager.swift in Sources */,
-				DB96D29528C27E6300C36782 /* ViewController.swift in Sources */,
+				DB96D29528C27E6300C36782 /* LoginViewController.swift in Sources */,
+				DB8EE3B429ABE109004CE37F /* QuarterSelectionController.swift in Sources */,
 				DBBC6B06294EC90B006BF7D1 /* GradeChartManager.swift in Sources */,
 				DB96D29128C27E6300C36782 /* AppDelegate.swift in Sources */,
+				DB8E8BDF29CB3896006A1EED /* KeyChain.swift in Sources */,
 				DBA1B65B2927B60B004D15FE /* SettingsViewController.swift in Sources */,
+				DB9C45CE29CCC38E00953EB8 /* ClassInfoBarVC.swift in Sources */,
 				DBE4E875293560F2001C4ACB /* Util.swift in Sources */,
 				DB726F3928EA596B00AF5F41 /* ClassInfoViewController.swift in Sources */,
 				DB96D29328C27E6300C36782 /* SceneDelegate.swift in Sources */,
@@ -418,20 +448,23 @@
 		};
 		DB96D2A228C27E6600C36782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 41AF5D8B825EBC70E3D37C12 /* Pods-PowerSchool Helper.debug.xcconfig */;
+			baseConfigurationReference = 36107F68D1A40CC3C2541EFF /* Pods-PowerSchool Helper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PowerSchool Helper/PowerSchool Helper.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CP8LXV38C4;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "PowerSchool Helper/Info.plist";
+				INFOPLIST_FILE = "/Users/branson/Desktop/PowerSchool Helper/PowerSchool Helper/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "PowerSchool Helper";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow access to photos to be able to change the wallpaper.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UILaunchStoryboardName = Launch.storyboard;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -440,7 +473,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Tiskua.PowerSchool-Helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -451,20 +484,23 @@
 		};
 		DB96D2A328C27E6600C36782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D598C3ED684F3C4CF597EFF /* Pods-PowerSchool Helper.release.xcconfig */;
+			baseConfigurationReference = 95BC8B7978C9DE8AF5012F64 /* Pods-PowerSchool Helper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PowerSchool Helper/PowerSchool Helper.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CP8LXV38C4;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "PowerSchool Helper/Info.plist";
+				INFOPLIST_FILE = "/Users/branson/Desktop/PowerSchool Helper/PowerSchool Helper/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "PowerSchool Helper";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow access to photos to be able to change the wallpaper.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UILaunchStoryboardName = Launch.storyboard;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -473,7 +509,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Tiskua.PowerSchool-Helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

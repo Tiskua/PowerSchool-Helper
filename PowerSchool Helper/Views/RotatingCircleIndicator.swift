@@ -5,7 +5,6 @@
 //  Created by Branson Campbell on 12/10/22.
 //
 
-import Foundation
 import UIKit
 
 class RotatingCirclesView: UIView {
@@ -23,29 +22,30 @@ class RotatingCirclesView: UIView {
     
     private func configure() {
         frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        let rect = self.bounds
-        let circularPath = UIBezierPath(ovalIn: rect)
-        
-        spinningCircle.path = circularPath.cgPath
-        spinningCircle.fillColor = UIColor.clear.cgColor
-        spinningCircle.strokeColor = Util.getThemeColor().cgColor
-        spinningCircle.lineWidth = 10
-        spinningCircle.strokeEnd = 0.25
-        spinningCircle.lineCap = .round
-        
-        self.layer.addSublayer(spinningCircle)
+        self.backgroundColor = .clear
+        self.layer.borderWidth = 5
+        self.layer.borderColor = Util.getThemeColor().cgColor
     }
     
     func animate() {
-        UIView.animate(withDuration: 1, delay: 0, options: .curveLinear, animations:  {
+        UIView.animate(withDuration: 1.2, delay: 0, options: .curveEaseInOut, animations:  {
+            self.frame = CGRect(x: self.frame.midX-25, y: self.frame.midY-25, width: 50, height: 50)
+            self.layer.cornerRadius = self.frame.width/2
             self.transform = CGAffineTransform(rotationAngle: .pi)
+
         }) { (completed) in
-            UIView.animate(withDuration: 1, delay: 0, options: .curveLinear, animations: {
-                self.transform = CGAffineTransform(rotationAngle: 0)
+            UIView.animate(withDuration: 1.2, delay: 0, options: .curveEaseInOut, animations: {
+                self.layer.cornerRadius = 0
+                self.frame = CGRect(x: self.frame.midX-50, y: self.frame.midY-50, width: 100, height: 100)
+                self.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/4))
+
             }) { (completed) in
-                self.animate()
+                UIView.animate(withDuration: 1.2, delay: 0, options: .curveEaseInOut, animations: {
+                    self.transform = CGAffineTransform(rotationAngle: 0)
+                }) { (completed) in
+                    self.animate()
+                }
             }
         }
-                        
     }
 }

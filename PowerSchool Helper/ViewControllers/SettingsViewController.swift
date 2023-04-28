@@ -8,13 +8,12 @@
 import UIKit
 import PhotosUI
 
+
 class SettingsViewController: UIViewController  {
     
         
     @IBOutlet weak var themeViewContainer: UIView!
     @IBOutlet weak var generalViewContainer: UIView!
-    @IBOutlet weak var aboutViewContainer: UIView!
-    
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
@@ -22,22 +21,22 @@ class SettingsViewController: UIViewController  {
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Verdana Bold", size: 12) ?? UIFont.systemFont(ofSize: 12)]
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+        self.sheetPresentationController?.prefersGrabberVisible = true
     }
     
     @IBAction func saveSettingsAction(_ sender: Any) {
         self.dismiss(animated: true)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "saved.settings"), object: nil)
+
     }
-    
     
     
     @IBAction func didChangeSegment(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
-            aboutViewContainer.isHidden = true
             themeViewContainer.isHidden = true
             generalViewContainer.isHidden = false
         }
         else if sender.selectedSegmentIndex == 1 {
-            aboutViewContainer.isHidden = true
             generalViewContainer.isHidden = true
             themeViewContainer.isHidden = false
 
@@ -45,7 +44,6 @@ class SettingsViewController: UIViewController  {
         else if sender.selectedSegmentIndex == 2 {
             generalViewContainer.isHidden = true
             themeViewContainer.isHidden = true
-            aboutViewContainer.isHidden = false
         }
     }
 }
@@ -54,9 +52,7 @@ class SettingsViewController: UIViewController  {
 class GeneralViewContainer: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var powerschoolURL: UITextField!
     @IBOutlet weak var hideClassesSwitch: UISwitch!
-    @IBOutlet weak var autoLoginSwitch: UISwitch!
-    
-
+    @IBOutlet weak var colorGradesSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,29 +62,28 @@ class GeneralViewContainer: UIViewController, UITextFieldDelegate {
         powerschoolURL.delegate = self
 
         if UserDefaults.standard.value(forKey: "pslink") != nil {powerschoolURL.text = UserDefaults.standard.string(forKey: "pslink")}
-        
-        if let hideUG = UserDefaults.standard.value(forKey: "hide-ug-class") as? Bool {hideClassesSwitch.isOn = hideUG}
-        if let autoLogin = UserDefaults.standard.value(forKey: "auto-login") as? Bool {autoLoginSwitch.isOn = autoLogin}
 
+        powerschoolURL.attributedPlaceholder = NSAttributedString(
+            string: "PowerSchool URL",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
+        )
+        hideClassesSwitch.isOn = UserDefaults.standard.bool(forKey: "hide-ug-class")
+        colorGradesSwitch.isOn = UserDefaults.standard.bool(forKey: "color-grades")
     }
+    
     @IBAction func editedURL(_ sender: Any) {
         if powerschoolURL.text!.replacingOccurrences(of: " ", with: "") == "" {return}
         if UserDefaults.standard.string(forKey: "pslink") != powerschoolURL.text! {
             UserDefaults.standard.set(powerschoolURL.text!, forKey: "pslink")
-            guard let url = URL(string: UserDefaults.standard.string(forKey: "pslink")!) else {return}
-            WebpageManager.shared.webView.load(URLRequest(url: url))
-            WebpageManager.shared.setPageLoadingStatus(status: .inital)
-            
         }
     }
     @IBAction func toggleShowUngradedClasses(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: "hide-ug-class")
     }
-    
-    @IBAction func toggleAutoLogin(_ sender: UISwitch) {
-        UserDefaults.standard.set(sender.isOn, forKey: "auto-login")
-
+    @IBAction func toggleColorGrades(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: "color-grades")
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
@@ -103,9 +98,11 @@ class ThemeViewContainer: UIViewController, UIColorPickerViewControllerDelegate,
 
     @IBOutlet weak var colorIndicator: UIView!
     @IBOutlet weak var imageIndicator: UIImageView!
+    @IBOutlet weak var bgOverlayOpacitySlider: UISlider!
+    @IBOutlet weak var bgOverlayOpacityIndicator: UILabel!
     
+    @IBOutlet weak var bgOverlayOnImageIndicator: UIView!
     var bgImageSave = UIImage()
-    var changedWallpaper = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,7 +114,13 @@ class ThemeViewContainer: UIViewController, UIColorPickerViewControllerDelegate,
         colorIndicator.addGestureRecognizer(gestureRecognizer)
         colorIndicator.isUserInteractionEnabled = true
         
-        Util.loadImage(imageView: imageIndicator)
+        Util.loadImage(imageView: imageIndicator) {_ in}
+        
+        if let backgroundOverlayOpacity = UserDefaults.standard.value(forKey: "background-overlay-opacity") as? Float {
+            bgOverlayOpacitySlider.value = backgroundOverlayOpacity
+        }
+        bgOverlayOpacityIndicator.text = "\(Int(bgOverlayOpacitySlider.value * 100))%"
+        bgOverlayOnImageIndicator.alpha = CGFloat(bgOverlayOpacitySlider.value)
         
     }
     
@@ -134,12 +137,14 @@ class ThemeViewContainer: UIViewController, UIColorPickerViewControllerDelegate,
         colorPickerVC.delegate = self
         colorPickerVC.supportsAlpha = false
         colorPickerVC.selectedColor = Util.getThemeColor()
+        
         present(colorPickerVC, animated: true)
     }
     
     @IBAction func resetBGImage(_ sender: Any) {
-        Util.clearBackgroundImage(imageView: inst.viewController.backgroundImage)
         UserDefaults.standard.removeObject(forKey: "bg-image")
+        UserDefaults.standard.removeObject(forKey: "background-overlay-opacity")
+
         imageIndicator.image = nil
     }
     
@@ -150,14 +155,46 @@ class ThemeViewContainer: UIViewController, UIColorPickerViewControllerDelegate,
 
         let pickerViewController = PHPickerViewController(configuration: config)
         pickerViewController.delegate = self
-        self.present(pickerViewController, animated: true, completion: nil)
+       
+        if PHPhotoLibrary.authorizationStatus() == .notDetermined {
+            PHPhotoLibrary.requestAuthorization({status in
+                if status == .authorized{
+                    DispatchQueue.main.async {
+                        self.present(pickerViewController, animated: true, completion: nil)
+                    }
+                }
+            })
+        } else if PHPhotoLibrary.authorizationStatus() == .denied {
+            let alert = UIAlertController(title: "Access Photos", message: "Allow acess to photos to change the wallpaper. Change in settings.", preferredStyle: UIAlertController.Style.alert)
+
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
+            
+            }))
+            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            self.present(pickerViewController, animated: true, completion: nil)
+
+        }
+    
     }
+    
+    
+    @IBAction func setBGOverlayOpacity(_ sender: UISlider) {
+        guard let classListVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ClassListViewController") as? ClassListViewController else { return }
+        UserDefaults.standard.set(sender.value, forKey: "background-overlay-opacity")
+        classListVC.backgroundOverlay.backgroundColor = .black.withAlphaComponent(CGFloat(sender.value))
+        bgOverlayOpacityIndicator.text = "\(Int(sender.value * 100))%"
+        bgOverlayOnImageIndicator.alpha = CGFloat(bgOverlayOpacitySlider.value)
+    }
+    
     
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
         let color = viewController.selectedColor
         Util.setThemeColor(color: color)
         colorIndicator.backgroundColor = color
-        inst.viewController.changeThemeColor()
     }
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
@@ -166,8 +203,6 @@ class ThemeViewContainer: UIViewController, UIColorPickerViewControllerDelegate,
             result.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { (object, error) in
                 if let image = object as? UIImage {
                     DispatchQueue.main.async {
-                        inst.viewController.setBackgroundImage(image: image)
-                        inst1.infoViewController.backgroundImage.image = image
                         Util.saveImage(image: image)
                         self.imageIndicator.image = image
                     }
@@ -177,7 +212,12 @@ class ThemeViewContainer: UIViewController, UIColorPickerViewControllerDelegate,
     }
 }
 
-class AboutViewContainer: UIViewController {
+class HelpViewController: UIViewController {
+    @IBOutlet weak var loginImage: UIImageView!
     
+    override func viewDidLoad() {
+        self.sheetPresentationController?.prefersGrabberVisible = true
+        super.viewDidLoad()
+    }
 }
 
