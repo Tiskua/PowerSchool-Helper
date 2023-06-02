@@ -8,12 +8,13 @@
 import UIKit
 import SwiftUI
 import RealmSwift
+
 class GradeChartManager {
     func getGradePointDataList(timeBack: Int, assignments: RealmSwift.List<Assignments>) -> [[String : String]]{
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
         
-        let assignmentsFromPast = getAssignmentsFromPast(days: timeBack)
+        let assignmentsFromPast = getAssignmentsFromPast(days: timeBack, assignments: assignments)
         var gradeDataFromPast: [[String : String]] = []
 
         for i in 0...timeBack-1 {
@@ -42,10 +43,26 @@ class GradeChartManager {
         return gradeDataFromPast
     }
     
+    func getMostRecentGrade(assignments: RealmSwift.List<Assignments>) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        
+        var mostRecentDate = assignments[0].date
+        
+        for assignment in assignments {
+            let assignmentDateFormatted = formatter.date(from: assignment.date)
+            let mostRecentDateFormatted = formatter.date(from: mostRecentDate)
+            
+            if assignmentDateFormatted! > mostRecentDateFormatted! {
+                mostRecentDate = assignment.date
+            }
+        }
+        return formatter.date(from: mostRecentDate)!
+    }
     
-    func getAssignmentsFromPast(days: Int) -> [String] {
+    func getAssignmentsFromPast(days: Int, assignments: RealmSwift.List<Assignments>) -> [String] {
         let cal = Calendar.current
-        var date = cal.startOfDay(for: Date())
+        var date = getMostRecentGrade(assignments: assignments)
         var dates = [String]()
         for _ in 1 ... days {
             let d = "\(cal.component(.month, from: date))/\(cal.component(.day, from: date))/\(cal.component(.year, from: date))"

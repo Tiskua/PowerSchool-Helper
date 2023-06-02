@@ -22,7 +22,7 @@ class WebpageManager {
         let configuration = WKWebViewConfiguration()
         configuration.defaultWebpagePreferences = prefs
         let webView = WKWebView(frame: CGRect(x: 0, y: 100, width: 400, height: 900), configuration: configuration)
-        webView.isHidden = true
+        webView.isHidden = !UserDefaults.standard.bool(forKey: "developer-mode")
         return webView
     }()
     
@@ -35,6 +35,7 @@ class WebpageManager {
         case classList
         case classInfo
         case signOut
+        case refreshing
         case unknown
     }
     
@@ -133,14 +134,15 @@ class WebpageManager {
                         studentClassData.received =  points[0]
                         studentClassData.total =  points[1]
                         studentClassData.detailedGrade = classData.getDetailedGrade(recieved: points[0], total: points[1])[0]
-                        let pointsNeed = classData.getPointsNeeded()
+                        let pointsNeed = classData.getPointsNeeded(total: ClassInfoManager.shared.getClassData(classType: classType, type: .total) as! Float,
+                                                                   received: ClassInfoManager.shared.getClassData(classType: classType, type: .received) as! Float)
                         studentClassData.needPointsPercent = Float(pointsNeed[0]) ?? -1
                         studentClassData.needPointsLetter = Float(pointsNeed[1]) ?? -1
                         
                         studentClassData.assignments =  classData.getAssignments()
 
-                        AccountManager.global.updatedClassInfoList.append(studentClassData)
                         AccountManager.global.updatedClasses.append("\(cl.class_name)_\(cl.quarter)")
+                        print(cl.class_name)
                         self.loopThroughClasses(index: index + 1)
                     } catch {
                         print(error.localizedDescription)
@@ -197,13 +199,34 @@ class WebpageManager {
     }
     
     public func checkIfLoggedOut(completion: @escaping (Bool) -> Void) {
-        webView.evaluateJavaScript("document.body.innerHTML") { result, error in
+        self.webView.evaluateJavaScript("document.body.innerHTML") { result, error in
             guard let html = result as? String, error == nil else {return}
             do {
                 let doc: Document = try SwiftSoup.parseBodyFragment(html)
                 let signedOutBox = try doc.select(".signedout.visible")
                 if signedOutBox.count > 0 {
-                    self.loadURL(completion: ) { _ in}
+                    
+                    print("YOU HAVE BEEN LOGGED OUT!")
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            } catch {
+                print(error.localizedDescription)
+                completion(true)
+            }
+        }
+       
+    }
+    public func checkRestore(completion: @escaping (Bool) -> Void) {
+        webView.evaluateJavaScript("document.body.innerHTML") { result, error in
+            guard let html = result as? String, error == nil else {return}
+            do {
+                let doc: Document = try SwiftSoup.parseBodyFragment(html)
+                let restoreBox = try doc.select("#sessionRestoreBox")
+                if restoreBox.count > 0 {
+                    print("INFO BEEN RESTORED")
+                    self.webView.evaluateJavaScript("document.querySelector('.buttons #no').click()")
                     completion(true)
                 } else {
                     completion(false)

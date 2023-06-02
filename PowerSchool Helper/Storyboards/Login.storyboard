@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="a1V-l9-NHG">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="qZI-8o-Vu9">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="a1V-l9-NHG" customClass="LoginViewController" customModule="PowerSchool_Helper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7Qs-Sn-RBx">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log In" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOy-7X-zDh">
+                                <rect key="frame" x="50" y="286.33333333333331" width="323" height="42.666666666666686"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="31"/>
+                                <color key="textColor" systemColor="systemGray5Color"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dT6-u1-tjo">
+                                <rect key="frame" x="50" y="449" width="293" height="34"/>
+                                <color key="backgroundColor" red="0.11372549830000001" green="0.11372549830000001" blue="0.12549020350000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="password"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OUa-oL-L1c">
+                                <rect key="frame" x="100" y="542.66666666666663" width="193" height="49.666666666666629"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Log In">
+                                    <fontDescription key="titleFontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="26"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="loginAction:" destination="a1V-l9-NHG" eventType="touchUpInside" id="YdG-0s-FIh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yh0-Jr-TWD">
+                                <rect key="frame" x="312" y="771" width="51" height="34"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <imageReference key="image" image="gearshape" catalog="system" symbolScale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="openSettings:" destination="a1V-l9-NHG" eventType="touchUpInside" id="J5u-MR-sqz"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalid Username or Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBy-Mn-lgF">
+                                <rect key="frame" x="20" y="493" width="353" height="19.666666666666629"/>
+                                <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="16"/>
+                                <color key="textColor" red="0.74117654560000001" green="0.231372565" blue="0.27450981740000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change the URL in General Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btU-Gy-Dhq">
+                                <rect key="frame" x="20" y="493" width="353" height="22"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
+                                <color key="textColor" red="0.7581338286" green="0.23483370319999999" blue="0.2801769496" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ck-az-pzf">
+                                <rect key="frame" x="20" y="769" width="50" height="34"/>
+                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="questionmark.circle" catalog="system"/>
+                                <connections>
+                                    <segue destination="jvx-O6-8oZ" kind="presentation" id="U7c-fy-2jo"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xiV-vo-6Il">
+                                <rect key="frame" x="50" y="399" width="293" height="34"/>
+                                <color key="backgroundColor" red="0.11372549830000001" green="0.11372549830000001" blue="0.12549020350000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="username"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="t7I-Vl-2zK"/>
+                        <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.12549020350000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="3ck-az-pzf" firstAttribute="leading" secondItem="t7I-Vl-2zK" secondAttribute="leading" constant="20" id="16g-GA-UKx"/>
+                            <constraint firstItem="CBy-Mn-lgF" firstAttribute="leading" secondItem="t7I-Vl-2zK" secondAttribute="leading" constant="20" id="1AS-T9-POm"/>
+                            <constraint firstItem="t7I-Vl-2zK" firstAttribute="bottom" secondItem="3ck-az-pzf" secondAttribute="bottom" constant="15" id="3h7-pl-x9z"/>
+                            <constraint firstItem="dT6-u1-tjo" firstAttribute="centerY" secondItem="7Qs-Sn-RBx" secondAttribute="centerY" constant="40" id="8M8-3q-G1p"/>
+                            <constraint firstItem="xiV-vo-6Il" firstAttribute="top" secondItem="jOy-7X-zDh" secondAttribute="bottom" constant="70" id="ADo-9Y-7JB"/>
+                            <constraint firstItem="xiV-vo-6Il" firstAttribute="leading" secondItem="t7I-Vl-2zK" secondAttribute="leading" constant="50" id="AXk-1s-gtT"/>
+                            <constraint firstItem="t7I-Vl-2zK" firstAttribute="trailing" secondItem="CBy-Mn-lgF" secondAttribute="trailing" constant="20" id="Acv-pA-TDa"/>
+                            <constraint firstItem="t7I-Vl-2zK" firstAttribute="trailing" secondItem="jOy-7X-zDh" secondAttribute="trailing" constant="20" id="KR5-jj-imU"/>
+                            <constraint firstItem="OUa-oL-L1c" firstAttribute="leading" secondItem="t7I-Vl-2zK" secondAttribute="leading" constant="100" id="Kq0-8k-531"/>
+                            <constraint firstItem="CBy-Mn-lgF" firstAttribute="centerX" secondItem="7Qs-Sn-RBx" secondAttribute="centerX" id="Mqe-VH-0kB"/>
+                            <constraint firstItem="t7I-Vl-2zK" firstAttribute="trailing" secondItem="OUa-oL-L1c" secondAttribute="trailing" constant="100" id="On6-IH-V1x"/>
+                            <constraint firstItem="t7I-Vl-2zK" firstAttribute="trailing" secondItem="Yh0-Jr-TWD" secondAttribute="trailing" constant="30" id="Pl4-AG-JVm"/>
+                            <constraint firstItem="CBy-Mn-lgF" firstAttribute="top" secondItem="dT6-u1-tjo" secondAttribute="bottom" constant="10" id="Vra-EW-4Ni"/>
+                            <constraint firstItem="btU-Gy-Dhq" firstAttribute="top" secondItem="dT6-u1-tjo" secondAttribute="bottom" constant="10" id="Y7H-xx-Rk3"/>
+                            <constraint firstItem="t7I-Vl-2zK" firstAttribute="bottom" secondItem="Yh0-Jr-TWD" secondAttribute="bottom" constant="13" id="aCt-UA-Ta0"/>
+                            <constraint firstItem="OUa-oL-L1c" firstAttribute="top" secondItem="CBy-Mn-lgF" secondAttribute="bottom" constant="30" id="dLx-TK-tBr"/>
+                            <constraint firstItem="t7I-Vl-2zK" firstAttribute="trailing" secondItem="btU-Gy-Dhq" secondAttribute="trailing" constant="20" id="j3e-Tm-NsZ"/>
+                            <constraint firstItem="jOy-7X-zDh" firstAttribute="leading" secondItem="t7I-Vl-2zK" secondAttribute="leading" constant="50" id="nMf-LK-IHH"/>
+                            <constraint firstItem="t7I-Vl-2zK" firstAttribute="trailing" secondItem="dT6-u1-tjo" secondAttribute="trailing" constant="50" id="ndF-02-3X5"/>
+                            <constraint firstItem="dT6-u1-tjo" firstAttribute="leading" secondItem="t7I-Vl-2zK" secondAttribute="leading" constant="50" id="rSP-F0-JJw"/>
+                            <constraint firstItem="xiV-vo-6Il" firstAttribute="centerY" secondItem="7Qs-Sn-RBx" secondAttribute="centerY" constant="-10" id="sMm-Zd-L4A"/>
+                            <constraint firstItem="t7I-Vl-2zK" firstAttribute="trailing" secondItem="xiV-vo-6Il" secondAttribute="trailing" constant="50" id="xTx-27-LLp"/>
+                            <constraint firstItem="btU-Gy-Dhq" firstAttribute="leading" secondItem="t7I-Vl-2zK" secondAttribute="leading" constant="20" id="ySg-5Y-fhR"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="skP-b0-lX3"/>
+                    <connections>
+                        <outlet property="helpButton" destination="3ck-az-pzf" id="Ruq-fc-LQ1"/>
+                        <outlet property="invalidLogin" destination="CBy-Mn-lgF" id="8cl-94-InM"/>
+                        <outlet property="invalidURL" destination="btU-Gy-Dhq" id="zN5-KB-Cij"/>
+                        <outlet property="loginButton" destination="OUa-oL-L1c" id="zyC-Bb-l2b"/>
+                        <outlet property="passwordTextField" destination="dT6-u1-tjo" id="A86-6N-PJ1"/>
+                        <outlet property="pwHelperLabel" destination="jOy-7X-zDh" id="8rM-yB-6kU"/>
+                        <outlet property="settingsButton" destination="Yh0-Jr-TWD" id="5VJ-zh-GG4"/>
+                        <outlet property="usernameTextField" destination="xiV-vo-6Il" id="rAR-0N-Pyk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8EQ-9b-JTE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2242" y="635"/>
+        </scene>
+        <!--Help-->
+        <scene sceneID="gve-HH-AY9">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Help" id="jvx-O6-8oZ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KXj-D9-e7a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2241" y="1101"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="gearshape" catalog="system" width="128" height="123"/>
+        <image name="questionmark.circle" catalog="system" width="128" height="123"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

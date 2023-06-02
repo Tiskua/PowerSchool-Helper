@@ -6,7 +6,9 @@
 //
 import GoogleMobileAds
 import UIKit
+import UserNotifications
 @main
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -18,9 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkMonitor.shared.startMonitoring()
         
         UITabBar.appearance().barTintColor = .black
-                
+        
+        NotificationManager.shared.registerForPushNotifications()
+        WatchManager.shared.setupWatchConnection()
         return true
     }
+    
+    
 
     
     // MARK: UISceneSession Lifecycle
@@ -45,4 +51,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 }
+
 

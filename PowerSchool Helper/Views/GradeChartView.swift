@@ -124,8 +124,6 @@ struct GradeChartView: View {
                              metadata       : metadata,
                              chartStyle     : chartStyle)
     }
-    
-    
 }
 
 

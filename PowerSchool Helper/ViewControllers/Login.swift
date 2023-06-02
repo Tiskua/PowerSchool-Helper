@@ -48,16 +48,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.borderWidth = 1
         loginButton.setTitleColor(Util.getThemeColor().isLight() ?? true ? UIColor.black : UIColor.white, for: .normal)
+        
+
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         WebpageManager.shared.isValidURL() { valid in
             if valid == false {
                 DispatchQueue.main.async {
                     self.invalidURL.isHidden = false
+                    self.loginButton.isEnabled = false
                 }
+            } else {
+                self.loginButton.isEnabled = true
+
             }
         }
     }
@@ -68,21 +78,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         WebpageManager.shared.loadURL() { success in
             WebpageManager.shared.setPageLoadingStatus(status: .inital)
             DispatchQueue.main.async {
-                if !success { self.invalidURL.isHidden = false
-                } else { self.invalidURL.isHidden = true }
+                if !success {
+                    self.invalidURL.isHidden = false
+                    self.loginButton.isEnabled = false
+                } else {
+                    self.invalidURL.isHidden = true
+                    self.loginButton.isEnabled = true
+                }
             }
         }
     }
     
-    private func animateHelp() {
-        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseInOut, animations: {
-            self.helpButton.transform = self.helpButton.transform.scaledBy(x: 1.5, y: 1.5)
-        }) { (completed) in
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
-                self.helpButton.transform = CGAffineTransform.identity
-            })
-        }
-    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
@@ -111,8 +118,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func openSettings(_ sender: Any) {
-        guard let settingsVC = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "SettingsViewController") as? SettingsViewController else {return}
-        self.present(settingsVC, animated: true, completion:nil)
+        guard let settingsVC = Storyboards.shared.settingsViewController() else {return}
+        self.navigationController?.pushViewController(settingsVC, animated: true)
     }
     
 

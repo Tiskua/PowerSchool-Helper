@@ -21,16 +21,15 @@ extension TabBarController: UITabBarControllerDelegate  {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let tabViewControllers = tabBarController.viewControllers!
         guard let toIndex = tabViewControllers.firstIndex(of: viewController) else {return false }
-        animateToTab(toIndex: toIndex)
-        
+        animateToTab(tab: tabBarController, toIndex: toIndex)
         return true
     }
-    
-    func animateToTab(toIndex: Int) {
-        let tabViewControllers = viewControllers!
-        let fromView = selectedViewController!.view
+
+    func animateToTab(tab: UITabBarController, toIndex: Int) {
+        let tabViewControllers = tab.viewControllers!
+        let fromView = tab.selectedViewController!.view
         let toView = tabViewControllers[toIndex].view!
-        let fromIndex = tabViewControllers.firstIndex(of: selectedViewController!)
+        let fromIndex = tabViewControllers.firstIndex(of: tab.selectedViewController!)
         guard fromIndex != toIndex else {return}
         
         fromView?.superview!.addSubview(toView)
@@ -47,11 +46,11 @@ extension TabBarController: UITabBarControllerDelegate  {
                 toView.center   = CGPoint(x: toView.center.x - offset, y: toView.center.y);
             }, completion: { finished in
                 fromView!.removeFromSuperview()
-                self.selectedIndex = toIndex
-                self.view.isUserInteractionEnabled = true
+                tab.selectedIndex = toIndex
+                tab.view.isUserInteractionEnabled = true
             })
     }
-    
+
 }
 
 class GradeHistoryVC: UIViewController {

@@ -8,7 +8,6 @@
 import UIKit
 import RealmSwift
 
-
 class ClassInfoManager {
     static let shared = ClassInfoManager()
     
@@ -36,9 +35,11 @@ class ClassInfoManager {
         case detailedGrade
     }
     
+   
+    
     func initizialeSchema(username: String) {
     
-        var config = Realm.Configuration(schemaVersion: 2)
+        var config = Realm.Configuration(schemaVersion: 3)
         Realm.Configuration.defaultConfiguration = config
         do {
             config.fileURL?.deleteLastPathComponent()
@@ -58,18 +59,18 @@ class ClassInfoManager {
     
     func addStudentToDatabase(username: String) {
         if checkIfStudentExists(username: username) {return}
+        
         do {
-            try realm!.write {
-                realm!.add(PowerschoolAccount(username: username))
+            try realm?.write() {
+                realm?.add(PowerschoolAccount(username: username))
             }
         } catch {
-            print("FAILED TO ADD STUDENT TO DATABASE: \(error.localizedDescription)")
+            print("FAILED TO ADD STUDENT: \(error.localizedDescription)")
         }
-         
     }
     
     func checkIfStudentExists(username:String) -> Bool {
-        let students = realm!.objects(PowerschoolAccount.self)
+        guard let students = realm?.objects(PowerschoolAccount.self) else { return false }
         for student in students {
             if student.username == username {
                 return true
@@ -80,7 +81,7 @@ class ClassInfoManager {
     
     
     func checkIfClassExists(username:String, classType: ClassType) -> Bool {
-        let students = realm!.objects(PowerschoolAccount.self)
+        guard let students = realm?.objects(PowerschoolAccount.self) else { return false }
         for student in students {
             if student.username == username {
                 for cl in student.classData {
@@ -94,16 +95,16 @@ class ClassInfoManager {
     }
     
     func getClassesData(username: String) -> [StudentClassData] {
-        let students = realm!.objects(PowerschoolAccount.self)
+        guard let students = realm?.objects(PowerschoolAccount.self) else { return [] }
         for student in students {
             if student.username != username {continue}
             return Array(student.classData)
         }
-        return [StudentClassData()]
+        return []
     }
     
     private func getClassInfo(classType: ClassType) -> StudentClassData {
-        let students = realm!.objects(PowerschoolAccount.self)
+        guard let students = realm?.objects(PowerschoolAccount.self) else { return StudentClassData()}
         for student in students {
             if student.username != classType.username {continue}
             for cl in student.classData {
@@ -118,7 +119,7 @@ class ClassInfoManager {
     
     
     private func getStudent(username: String) -> PowerschoolAccount {
-        let students = realm!.objects(PowerschoolAccount.self)
+        guard let students = realm?.objects(PowerschoolAccount.self) else { return PowerschoolAccount()}
         for student in students {
             if student.username != username {continue}
             return student
@@ -130,26 +131,26 @@ class ClassInfoManager {
     
     
     func addClass(username: String, classType: ClassType) {
-        let students = realm!.objects(PowerschoolAccount.self)
+        guard let students = realm?.objects(PowerschoolAccount.self) else { return }
         if checkIfClassExists(username: username, classType: classType) {return}
 
         for student in students {
             if student.username != username {continue}
             do {
-                try realm?.write {
+                try realm?.write() {
                     student.classData.append(StudentClassData(className: classType.className, quarter: classType.quarter, href: classType.href))
                 }
             } catch {
-                print("FAILED TO ADD CLASS \(classType.className): \(error.localizedDescription)")
+                print("FAILED TO ADD CLASS: \(error.localizedDescription)")
             }
-           
+            
         }
     }
     
     func setStudentInfo(username: String, type: StudentDataOptions, value: String) {
         let student = getStudent(username: username)
         do {
-            try realm?.write {
+            try realm?.write() {
                 switch type {
                     case .username: student.username = value
                     case.firstName: student.firstName = value
@@ -160,33 +161,35 @@ class ClassInfoManager {
             print("FAILED TO SET STUDENT INFO: \(error.localizedDescription)")
         }
         
+       
     }
     
     
     func setClassData(classType: ClassType, type: ClassDataOptions, value: Any) {
         let cl = getClassInfo(classType: classType)
+
         do {
-            try realm?.write {
+            try realm?.write() {
                 switch type {
-                case .className: cl.class_name = value as! String
-                case .quarter: cl.quarter = value as! Int
-                case .href: cl.href = value as! String
-                case .grade: cl.grade = value as! Int
-                case .weightedGrade: cl.weighted_grade = value as! Int
-                case .teacher: cl.teacher = value as! String
-                case .received: cl.received = value as! Float
-                case .total: cl.total = value as! Float
-                case .assignments: cl.assignments.append(value as! Assignments)
-                case .letterGrade: cl.letterGrade = value as! String
-                case .needPointsLetter: cl.needPointsLetter = value as! Float
-                case .needPointsPercent: cl.needPointsPercent = value as! Float
-                case .detailedGrade: cl.detailedGrade = value as! Float
-                    
+                    case .className: cl.class_name = value as! String
+                    case .quarter: cl.quarter = value as! Int
+                    case .href: cl.href = value as! String
+                    case .grade: cl.grade = value as! Int
+                    case .weightedGrade: cl.weighted_grade = value as! Int
+                    case .teacher: cl.teacher = value as! String
+                    case .received: cl.received = value as! Float
+                    case .total: cl.total = value as! Float
+                    case .assignments: cl.assignments.append(value as! Assignments)
+                    case .letterGrade: cl.letterGrade = value as! String
+                    case .needPointsLetter: cl.needPointsLetter = value as! Float
+                    case .needPointsPercent: cl.needPointsPercent = value as! Float
+                    case .detailedGrade: cl.detailedGrade = value as! Float
                 }
             }
         } catch {
-            print("FAILED TO SET ClASS DATA: \(error.localizedDescription)")
+            print("FAILED TO SET CLASS INFO: \(error.localizedDescription)")
         }
+        
     }
     
     func getClassData(classType: ClassType, type: ClassDataOptions) -> Any {
@@ -209,15 +212,22 @@ class ClassInfoManager {
         }
     }
     
-    func updateAssignment(classType: ClassType, customid: String, newScore: String, flags: String, date: String) {
+    func updateAssignment(classType: ClassType, customid: String, newScore: String, flags: String, date: String, category: String) {
         let cl = getClassInfo(classType: classType)
         for assignment in cl.assignments {
             if assignment.customid == customid {
-                try! realm!.write {
-                    assignment.score = newScore
-                    assignment.flags = flags
-                    assignment.date = date
+                do {
+                    try realm?.write() {
+                        assignment.score = newScore
+                        assignment.flags = flags
+                        assignment.date = date
+                        assignment.category = category
+
+                    }
+                } catch {
+                    print("FAILED TO UPDATE ASSIGNMENT: \(error.localizedDescription)")
                 }
+                
             }
         }
     }
@@ -236,9 +246,7 @@ class ClassType {
         self.quarter = quarter
         self.href = href 
     }
-    
 }
-
 
 class PowerschoolAccount: Object {
     @Persisted(primaryKey: true) var _id: ObjectId
@@ -284,16 +292,19 @@ class StudentClassData: Object {
 class Assignments: Object {
     @Persisted(primaryKey: true)  var customid: String = ""
     @Persisted var name: String = ""
-    @Persisted var score:String = ""
-    @Persisted var flags:String = ""
-    @Persisted var date:String = ""
+    @Persisted var score: String = ""
+    @Persisted var flags: String = ""
+    @Persisted var date: String = ""
+    @Persisted var category: String = ""
+
     
-    convenience init(name: String, score: String, flags: String, date: String) {
+    convenience init(name: String, score: String, flags: String, date: String, category: String) {
         self.init()
         self.name = name
         self.score = score
         self.flags = flags
         self.date = date
+        self.category = category
         self.customid = "\(name)_\(date)"
     }
 
@@ -306,7 +317,6 @@ class AccountManager {
     public var updatedClasses: [String] = []
     public var classIndexToUpdate = 0
     public var selectedQuarter = 1
-    public var updatedClassInfoList: [StudentClassData] = []
     
     public var selectedClass = ""
     public var selectedhref = ""

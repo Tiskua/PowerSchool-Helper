@@ -1,6 +1,7 @@
 //
 //  ClassViewController.swift
-//  
+//
+//  PowerSchool Helper
 //
 //  Created by Branson Campbell on 10/2/22.
 //
@@ -27,7 +28,6 @@ class ClassInfoController: UIViewController {
     @IBOutlet weak var gradeLabel: UILabel!
     
     var selectedClass = ""
-    var selectedQuarter = 1
     var selectedhref = ""
     
     var username = ""
@@ -44,7 +44,6 @@ class ClassInfoController: UIViewController {
         
         selectedClass = AccountManager.global.selectedClass
         selectedhref = AccountManager.global.selectedhref
-        selectedQuarter = AccountManager.global.selectedQuarter
         classLabel.textColor = Util.getThemeColor()
         assignmentsLabel.textColor = Util.getThemeColor()
     
@@ -58,13 +57,22 @@ class ClassInfoController: UIViewController {
                 setClassInfo(doc: doc)
             }
         }
+        
+        if UserDefaults.standard.bool(forKey: "nate-mode") {
+            let imageView = UIImageView(frame: view.bounds)
+            imageView.contentMode = .scaleAspectFill
+            imageView.image = UIImage(named: "Nate")
+            view.insertSubview(imageView, at: 0)
+        }
+        myTable.delegate = self
+        myTable.dataSource = self
         myTable.layer.cornerRadius = 10
         myTable.backgroundColor = .black
     }
     func setClassInfo(doc: SwiftSoup.Document) {
-        let classType = ClassType(username: AccountManager.global.username, className: selectedClass, quarter: self.selectedQuarter, href: selectedhref)
+        let classType = ClassType(username: AccountManager.global.username, className: selectedClass, quarter: AccountManager.global.selectedQuarter, href: selectedhref)
         let classData = ClassData(isUpdated: false, classType: classType, doc: doc)
-        if AccountManager.global.updatedClasses.contains("\(selectedClass)_\(selectedQuarter)") {
+        if AccountManager.global.updatedClasses.contains("\(selectedClass)_\(AccountManager.global.selectedQuarter)") {
             classData.isUpdated = true }
 
         classLabel.text = selectedClass
@@ -79,20 +87,22 @@ class ClassInfoController: UIViewController {
         let points = classData.getPoints()
 
         pointsLabel.text = "Points: \(points[0]) / \(points[1])"
-        let needPointsData = classData.getPointsNeeded()
+        let needPointsData = classData.getPointsNeeded(total: ClassInfoManager.shared.getClassData(classType: classType, type: .total) as! Float,
+                                                       received: ClassInfoManager.shared.getClassData(classType: classType, type: .received) as! Float)
         needPercentLabel.text = "Need (\(needPointsData[0])%): \(needPointsData[1])"
         needLetterLabel.text = "Need (\(needPointsData[2])): \(needPointsData[3])"
         
         let _ = classData.getAssignments()
-        myTable.delegate = self
-        myTable.dataSource = self
+        
         myTable.reloadData()
         
-        let detailedGrades = classData.getDetailedGrade(recieved: points[0], total: points[1])
+        let detailedGrades = classData.getDetailedGrade(recieved: points[0],
+                                                        total: points[1])
         detailedGradeLabel.text = "\(detailedGrades[0])% | \(detailedGrades[1])%"
 
         WebpageManager.shared.setPageLoadingStatus(status: .classList)
-        AccountManager.global.updatedClasses.append("\(selectedClass)_\(selectedQuarter)")
+        AccountManager.global.updatedClasses.append("\(selectedClass)_\(AccountManager.global.selectedQuarter)")
+        
         if WebpageManager.shared.wasLoopingClasses {
             WebpageManager.shared.isLoopingClasses = true
             WebpageManager.shared.loopThroughClasses(index: AccountManager.global.classIndexToUpdate)
@@ -128,9 +138,7 @@ class ClassData {
         }
         let letterGrade = Util.findGradeLetterSP(grade: unweightedGrade)
         ClassInfoManager.shared.setClassData(classType: classType, type: .letterGrade, value: letterGrade)
-
         return letterGrade
-        
     }
     
     func getGrade() -> [Int] {
@@ -154,7 +162,6 @@ class ClassData {
         }
         return [unweightedGrade, weightedGrade]
     }
-    
     
     func getDetailedGrade(recieved: Float, total: Float) -> [Float] {
         let grade = ClassInfoManager.shared.getClassData(classType: classType, type: .grade) as! Int
@@ -182,9 +189,7 @@ class ClassData {
                 print("Error")
             }
         }
-        
         return teacherName
-        
     }
         
     func getPoints() -> [Float] {
@@ -222,9 +227,7 @@ class ClassData {
         return [received, total]
     }
     
-    func getPointsNeeded() -> [String] {
-        let received = ClassInfoManager.shared.getClassData(classType: classType, type: .received) as! Float
-        let total = ClassInfoManager.shared.getClassData(classType: classType, type: .total) as! Float
+    func getPointsNeeded(total: Float, received: Float) -> [String] {
         
         if (total/received).isNaN {return ["", "", "", ""]}
         
@@ -267,17 +270,18 @@ class ClassData {
                 for tr in trs {
                     let tds: Elements = try tr.select("td")
                     if tds.size() < 10 {continue}
+                    let date: String = try tds[0].text()
+                    let category: String = try tds[1].text()
                     let name: String = try tds[2].select("span").text()
                     let score: String = try tds[10].text()
-                    let date: String = try tds[0].text()
                     let customid = "\(name)_\(date)"
                     guard let dataAssignment = ClassInfoManager.shared.realm!.object(ofType: Assignments.self, forPrimaryKey: customid) else {
-                        let assignment = Assignments(name: name, score: score, flags: getAssignemntFlags(tds: tds), date: date)
+                        let assignment = Assignments(name: name, score: score, flags: getAssignemntFlags(tds: tds), date: date, category: category)
                         ClassInfoManager.shared.setClassData(classType: classType, type: .assignments, value: assignment)
                         continue
                     }
-                    if dataAssignment.score != score || dataAssignment.flags != getAssignemntFlags(tds: tds) || dataAssignment.date != date {
-                        ClassInfoManager.shared.updateAssignment(classType: classType, customid: customid, newScore: score, flags: getAssignemntFlags(tds: tds), date: date)
+                    if dataAssignment.score != score || dataAssignment.flags != getAssignemntFlags(tds: tds) || dataAssignment.date != date || dataAssignment.category != category {
+                        ClassInfoManager.shared.updateAssignment(classType: classType, customid: customid, newScore: score, flags: getAssignemntFlags(tds: tds), date: date, category: category)
                     }
                 }
             } catch {
@@ -314,7 +318,6 @@ extension ClassInfoController: UITableViewDelegate, UITableViewDataSource {
         let cell = myTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.backgroundColor = .black
     
-        
         var cellConfig = cell.defaultContentConfiguration()
         cellConfig.textProperties.numberOfLines = 0
         cellConfig.textProperties.lineBreakMode = .byWordWrapping
@@ -325,6 +328,12 @@ extension ClassInfoController: UITableViewDelegate, UITableViewDataSource {
         cell.contentConfiguration = cellConfig
         cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let tabController = Storyboards.shared.tabBarController() else { return }
+        tabController.animateToTab(tab: self.tabBarController!, toIndex: 1)
+
     }
 }
 
