@@ -8,7 +8,5 @@ target 'PowerSchool Helper' do
   pod 'RealmSwift'
 end
 
-target 'Powerschool Helper Watch Watch App' do
-  platform :watchos, '9.0'
-end
+
 

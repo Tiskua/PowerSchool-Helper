@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22129"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportClassView" customModule="PowerSchool_Helper" customModuleProvider="target">
+            <connections>
+                <outlet property="assignmentChangeLabel" destination="qV8-IK-an6" id="yWJ-06-jJL"/>
+                <outlet property="classNameLabel" destination="yq8-Q3-pYU" id="wOV-MC-kq1"/>
+                <outlet property="earnedPointsLabel" destination="4hH-lc-fCO" id="FH9-fc-Opn"/>
+                <outlet property="gradeChangeLabel" destination="OaA-eN-Db2" id="3pO-OR-0ih"/>
+                <outlet property="totalPointsLabel" destination="Xlc-fn-WUr" id="7Uw-NX-G0M"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="GRD-Ds-oYH" userLabel="View">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Adv. Western Civilization" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yq8-Q3-pYU">
+                    <rect key="frame" x="20" y="15" width="360" height="82"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Heavy" family="Avenir Next" pointSize="30"/>
+                    <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Grade: 98% -&gt; 100%" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OaA-eN-Db2">
+                    <rect key="frame" x="40" y="107" width="182" height="24.666666666666657"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                    <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Earned: 100 -&gt; 120" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hH-lc-fCO">
+                    <rect key="frame" x="40" y="136.66666666666666" width="169.33333333333334" height="24.666666666666657"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                    <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Assignments: 10 -&gt; 12" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qV8-IK-an6">
+                    <rect key="frame" x="40" y="196" width="196" height="24.666666666666657"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                    <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Total: 100 -&gt; 120" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlc-fn-WUr">
+                    <rect key="frame" x="40" y="166.33333333333334" width="149.66666666666666" height="24.666666666666657"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                    <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="MhO-Tb-MGX"/>
+            <constraints>
+                <constraint firstItem="yq8-Q3-pYU" firstAttribute="leading" secondItem="MhO-Tb-MGX" secondAttribute="leading" constant="20" id="GtS-xX-1dN"/>
+                <constraint firstItem="qV8-IK-an6" firstAttribute="leading" secondItem="MhO-Tb-MGX" secondAttribute="leading" constant="40" id="IR0-oE-dte"/>
+                <constraint firstItem="OaA-eN-Db2" firstAttribute="top" secondItem="yq8-Q3-pYU" secondAttribute="bottom" constant="10" id="LS7-Nl-QsD"/>
+                <constraint firstItem="qV8-IK-an6" firstAttribute="top" secondItem="Xlc-fn-WUr" secondAttribute="bottom" constant="5" id="SIO-pj-nje"/>
+                <constraint firstItem="4hH-lc-fCO" firstAttribute="leading" secondItem="MhO-Tb-MGX" secondAttribute="leading" constant="40" id="Sex-ow-esr"/>
+                <constraint firstItem="4hH-lc-fCO" firstAttribute="top" secondItem="OaA-eN-Db2" secondAttribute="bottom" constant="5" id="VyJ-S8-9bC"/>
+                <constraint firstItem="yq8-Q3-pYU" firstAttribute="top" secondItem="GRD-Ds-oYH" secondAttribute="top" constant="15" id="bU7-gV-ofE"/>
+                <constraint firstAttribute="trailing" secondItem="yq8-Q3-pYU" secondAttribute="trailing" constant="20" id="g42-eY-Ywv"/>
+                <constraint firstItem="OaA-eN-Db2" firstAttribute="leading" secondItem="MhO-Tb-MGX" secondAttribute="leading" constant="40" id="uF4-ry-iqt"/>
+                <constraint firstItem="Xlc-fn-WUr" firstAttribute="leading" secondItem="MhO-Tb-MGX" secondAttribute="leading" constant="40" id="uIL-p6-VLd"/>
+                <constraint firstItem="Xlc-fn-WUr" firstAttribute="top" secondItem="4hH-lc-fCO" secondAttribute="bottom" constant="5" id="zVi-ub-gKE"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="896.18320610687022" y="19.718309859154932"/>
+        </view>
+    </objects>
+</document>

@@ -41,6 +41,24 @@ class Util {
         return .white
     }
     
+    public static func convertFlagToNameAndColor(flags: String) -> NSMutableAttributedString {
+        let finalString: NSMutableAttributedString = NSMutableAttributedString(string: " ", attributes: [NSAttributedString.Key.font : UIFont(name: "Avenir Next Bold", size: 16)!])
+        var flagsList: [NSMutableAttributedString] = []
+        for flag in flags {
+            let flagNames = "\(Util.getFlagName(flag: String(flag)))"
+            let myMutableString = NSMutableAttributedString(string: flagNames)
+            myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: Util.setFlagColor(flag: String(flag)), range: NSRange(location:0,length:flagNames.count))
+            flagsList.append(myMutableString)
+        }
+        let seperator = NSMutableAttributedString(string: " , ", attributes: [NSAttributedString.Key.font : UIFont(name: "Avenir Next Bold", size: 16)!])
+        seperator.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.darkGray, range: NSRange(location:0,length:3))
+        for (i,list) in flagsList.enumerated() {
+            finalString.append(list)
+            if i < flagsList.count - 1 { finalString.append(seperator) }
+        }
+        return finalString
+    }
+    
     
     public static func findGradeLetterSP(grade: Int) -> String {
         var grade_letter = "Unknown"
@@ -55,10 +73,11 @@ class Util {
         else if(grade >= 70) {grade_letter = "C-"}
         else if(grade >= 67) {grade_letter = "D+"}
         else if(grade >= 65) {grade_letter = "D"}
-        else if(grade < 65) {grade_letter = "F"}
-        
+        else if(grade < 65 && grade > 0) {grade_letter = "F"}
+        else { grade_letter = "--"}
         return grade_letter
     }
+    
     public static func findGradeLetter(grade: Int) -> String {
         var grade_letter = "Unknown"
         if(grade >= 93) { grade_letter = "A"}
@@ -68,6 +87,15 @@ class Util {
         else if(grade < 65) {grade_letter = "F"}
         
         return grade_letter
+    }
+    
+    public static func addWeightofClass(c: StudentClassData) -> Double {
+        let placement = c.placement.lowercased()
+        if placement == "regular" { return 0 }
+        else if placement == "honors/advanced" { return 0.5 }
+        else if placement == "ap/ib" { return 1 }
+        else if placement == "college" { return 1 }
+        else { return 0 }
     }
     
     public static func findGPA(grade: Int) -> Double {
@@ -112,6 +140,10 @@ class Util {
         return nil
     }
     
+    public static func getURL() -> String {
+        return UserDefaults.standard.string(forKey: "pslink") ?? ""
+    }
+    
     public static func formatQuarterLabel() -> String {
         if let orderedList = UserDefaults.standard.array(forKey: "order-quarter-list") as? [String], orderedList.count > AccountManager.global.selectedQuarter  {
             return orderedList[AccountManager.global.selectedQuarter-1]
@@ -124,7 +156,7 @@ class Util {
         } else { return "UK"}
     }
     
-    public static func showLoading(view: UIView) {
+    public static func showLoading(view: UIView, text: String = "") {
         let loadingBG = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         loadingBG.backgroundColor = .black
         loadingBG.layer.opacity = 0.8
@@ -136,17 +168,30 @@ class Util {
                 progress.translatesAutoresizingMaskIntoConstraints = false
                 return progress
         }()
+        
         loadingIndicator.frame = CGRect(x: view.center.x-50, y: view.center.y-50, width: 100, height: 100)
         loadingIndicator.animateStroke()
         loadingIndicator.animateRotation()
         loadingIndicator.tag = 201
+        
+        let textLabel = UILabel(frame: CGRect(x: 20, y: view.center.y + 70, width: view.frame.width-40, height: 40))
+        textLabel.text = text
+        textLabel.font = UIFont(name: "Avenir Next Bold", size: 20)
+        textLabel.textAlignment = .center
+        textLabel.textColor = Util.getThemeColor()
+        textLabel.tag = 202
+        
+        view.addSubview(textLabel)
         view.addSubview(loadingIndicator)
         view.isUserInteractionEnabled = false
+        
     }
     
     public static func hideLoading(view: UIView) {
         while let viewWithTag = view.viewWithTag(200) {viewWithTag.removeFromSuperview()}
         while let viewWithTag = view.viewWithTag(201) {viewWithTag.removeFromSuperview()}
+        while let viewWithTag = view.viewWithTag(202) {viewWithTag.removeFromSuperview()}
+
         view.isUserInteractionEnabled = true
 
     }
@@ -165,6 +210,7 @@ class Util {
                                                      ["grade" : "C", "color" : UIColor(red: 255/255, green: 215/255, blue: 0/255, alpha: 1).colorToString()],
                                                      ["grade" : "D", "color" : UIColor(red: 255/255, green: 165/255, blue: 0/255, alpha: 1).colorToString()],
                                                      ["grade" : "F", "color" : UIColor(red: 182/255, green: 5/255, blue: 5/255, alpha: 1).colorToString()]]
+        
         if let savedGradeColors = UserDefaults.standard.array(forKey: "grade-colors") as? [[String : String]] {
             gradeColors = savedGradeColors
         }
@@ -173,8 +219,7 @@ class Util {
         else if grade >= 75 { return gradeColors[2]["color"]!.stringToColor()}
         else if grade >= 65 { return gradeColors[3]["color"]!.stringToColor()}
         else if grade <= 64 && grade > -1 { return gradeColors[4]["color"]!.stringToColor()}
-        
-        return Util.getThemeColor().isLight()! ? .black : .white
+        else { return .white}
     }
     
     public static func getTermOptions(completion: @escaping (Bool) -> Void) {
@@ -209,55 +254,7 @@ class Util {
     }
 }
 
-class Storyboards {
-    public static let shared = Storyboards()
-    
-    public let classInfoStoryboard =  UIStoryboard(name: "ClassInfo", bundle: nil)
-    public let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-    public let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
-    public let settingsStoryboard = UIStoryboard(name: "Settings", bundle: nil)
-    public let helpStoryboard = UIStoryboard(name: "Help", bundle: nil)
-    public let assignmentsStoryboard = UIStoryboard(name: "Assignments", bundle: nil)
 
-    public func loginViewController() -> LoginViewController? {
-        return loginStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
-    }
-    public func classInfoViewController() -> ClassInfoController? {
-        return classInfoStoryboard.instantiateViewController(withIdentifier: "ClassInfoController") as? ClassInfoController
-    }
-    public func settingsViewController() -> SettingsCategoryViewController? {
-        return settingsStoryboard.instantiateViewController(withIdentifier: "SettingsCategoryViewController") as? SettingsCategoryViewController
-    }
-    public func classListViewController() -> ClassListViewController? {
-        return mainStoryboard.instantiateViewController(withIdentifier: "ClassListViewController") as? ClassListViewController
-    }
-    public func tabBarController() -> TabBarController? {
-        return classInfoStoryboard.instantiateViewController(withIdentifier: "TabBarController") as? TabBarController
-    }
-    public func orderViewController() -> OrderViewController? {
-        return mainStoryboard.instantiateViewController(withIdentifier: "OrderViewController") as? OrderViewController
-    }
-    public func quarterSelectViewController() -> QuarterSelectionController? {
-        return mainStoryboard.instantiateViewController(withIdentifier: "QuarterSelectionController") as? QuarterSelectionController
-    }
-    public func assignmentCalculatorViewController() -> AssignmentCalculatorViewController? {
-        return assignmentsStoryboard.instantiateViewController(withIdentifier: "AssignmentCalculatorViewController") as? AssignmentCalculatorViewController
-    }
-    public func assignmentDetailViewController() -> AssignmentDetailViewController? {
-        return assignmentsStoryboard.instantiateViewController(withIdentifier: "AssignmentDetailViewController") as? AssignmentDetailViewController
-    }
-    public func assignmentViewController() -> AssignmentViewController? {
-        return assignmentsStoryboard.instantiateViewController(identifier: "AssignmentViewController") as? AssignmentViewController
-    }
-    public func repeatViewController() -> RepeatViewController? {
-        return settingsStoryboard.instantiateViewController(identifier: "RepeatViewController") as? RepeatViewController
-    }
-    public func helpViewController() -> HelpViewController? {
-        return helpStoryboard.instantiateViewController(identifier: "HelpViewController") as? HelpViewController
-    }
-    
-    
-}
 
 extension UIColor {
     func isLight(threshold: Float = 0.5) -> Bool? {
@@ -269,7 +266,6 @@ extension UIColor {
         guard components.count >= 3 else { return nil}
         let brightness = Float(((components[0] * 299) + (components[1] * 587) + (components[2] * 114)) / 1000)
         return (brightness > threshold)
-            
     }
     
     func colorToString() -> String {
@@ -300,5 +296,32 @@ extension String {
             green: CGFloat((components[1] as NSString).floatValue),
             blue: CGFloat((components[2] as NSString).floatValue),
             alpha: CGFloat((components[3] as NSString).floatValue))
+    }
+}
+
+extension UIView {
+    func addOverlay(color: UIColor) {
+        let gradient = CAGradientLayer()
+        gradient.type = .axial
+        gradient.colors = [
+            Util.getThemeColor().withAlphaComponent(0.7).cgColor,
+            Util.getThemeColor().cgColor,
+        ]
+        gradient.locations = [ 0.0, 1.0]
+        gradient.frame = self.bounds
+        gradient.cornerRadius = 10
+        self.layer.addSublayer(gradient)
+    }
+    
+    func dropShadow(opacity: Float = 0.4, offset: CGSize = CGSize(width: 5, height: 5)) {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = opacity
+        layer.shadowOffset = offset
+    }
+    
+    func centerVertically() {
+        let superviewHeight = superview?.frame.height ?? -100
+        let superviewCenter = (superviewHeight)/2
+        self.center.y = superviewCenter
     }
 }

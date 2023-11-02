@@ -8,20 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		6F807E7745F2851B09F79182 /* Pods_PowerSchool_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8DB7D2B983E12390622ED8F /* Pods_PowerSchool_Helper.framework */; };
-		B2B0F9D4CD720D5FEAD7439B /* Pods_Powerschool_Helper_Watch_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 778C58F024268C0BE884160F /* Pods_Powerschool_Helper_Watch_Watch_App.framework */; };
 		DB001048294A5D6C00318B03 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB001047294A5D6B00318B03 /* ProgressView.swift */; };
 		DB00C5932A0ABA6F00F05419 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB00C5922A0ABA6F00F05419 /* Help.storyboard */; };
 		DB00C5952A0ABB0300F05419 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB00C5942A0ABB0300F05419 /* Login.storyboard */; };
 		DB00C5972A0ABDA600F05419 /* Assignments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB00C5962A0ABDA600F05419 /* Assignments.storyboard */; };
-		DB00C5992A0B12D300F05419 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB00C5982A0B12D300F05419 /* SidebarView.swift */; };
-		DB00C59B2A0B131F00F05419 /* SidebarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB00C59A2A0B131F00F05419 /* SidebarView.xib */; };
+		DB0C67E12AB11FAE009EC88B /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0C67E02AB11FAE009EC88B /* Account.swift */; };
+		DB0C67E32AB12311009EC88B /* WebPageEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0C67E22AB12311009EC88B /* WebPageEvents.swift */; };
+		DB0C67E52AB1263E009EC88B /* Storyboards.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0C67E42AB1263E009EC88B /* Storyboards.swift */; };
 		DB1781442954E729002DBB93 /* NetoworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1781432954E729002DBB93 /* NetoworkMonitor.swift */; };
 		DB17814829552558002DBB93 /* WebPageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB17814729552558002DBB93 /* WebPageManager.swift */; };
 		DB18A40528C816AB0034037F /* ClassList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB18A40428C816AB0034037F /* ClassList.swift */; };
 		DB26928D2A07FF7100D8B9C9 /* ClassView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB26928C2A07FF7100D8B9C9 /* ClassView.xib */; };
+		DB3FDDC82A719AE8001B575C /* StudentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3FDDC72A719AE8001B575C /* StudentInfo.swift */; };
+		DB509C882A89D3740091FFBC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB509C872A89D3740091FFBC /* GoogleService-Info.plist */; };
 		DB726F3928EA596B00AF5F41 /* ClassInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB726F3828EA596B00AF5F41 /* ClassInfo.swift */; };
-		DB8E86B02958F68C004D3A7D /* ClassDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8E86AF2958F68C004D3A7D /* ClassDataManager.swift */; };
-		DB8E86B2295A57A7004D3A7D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB8E86B1295A57A7004D3A7D /* Main.storyboard */; };
+		DB8E86B02958F68C004D3A7D /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8E86AF2958F68C004D3A7D /* Database.swift */; };
+		DB8E86B2295A57A7004D3A7D /* ClassList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB8E86B1295A57A7004D3A7D /* ClassList.storyboard */; };
 		DB8E8BDF29CB3896006A1EED /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8E8BDE29CB3896006A1EED /* KeyChain.swift */; };
 		DB8EE3B429ABE109004CE37F /* QuarterSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8EE3B329ABE109004CE37F /* QuarterSelection.swift */; };
 		DB96D29128C27E6300C36782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB96D29028C27E6300C36782 /* AppDelegate.swift */; };
@@ -29,13 +31,11 @@
 		DB96D29528C27E6300C36782 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB96D29428C27E6300C36782 /* Login.swift */; };
 		DB96D29A28C27E6600C36782 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB96D29928C27E6600C36782 /* Assets.xcassets */; };
 		DB96D29D28C27E6600C36782 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB96D29B28C27E6600C36782 /* LaunchScreen.storyboard */; };
-		DB9C45CE29CCC38E00953EB8 /* ClassInfoBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C45CD29CCC38E00953EB8 /* ClassInfoBar.swift */; };
+		DB9C45CE29CCC38E00953EB8 /* TabBars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C45CD29CCC38E00953EB8 /* TabBars.swift */; };
 		DBA1B65B2927B60B004D15FE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA1B65A2927B60B004D15FE /* Settings.swift */; };
-		DBA307112A12F2360048DCF4 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA307102A12F2360048DCF4 /* DataManager.swift */; };
-		DBB805212A17EC73001281B5 /* WatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB805202A17EC73001281B5 /* WatchManager.swift */; };
-		DBBC6AFE294EBD35006BF7D1 /* GradeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC6AFD294EBD35006BF7D1 /* GradeChartView.swift */; };
+		DBBA25E32ABA776000409CE7 /* ReportClassView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBBA25E22ABA776000409CE7 /* ReportClassView.xib */; };
+		DBBA25E52ABA776A00409CE7 /* ReportClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBA25E42ABA776A00409CE7 /* ReportClassView.swift */; };
 		DBBC6B04294EC18B006BF7D1 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = DBBC6B03294EC18B006BF7D1 /* SwiftUICharts */; };
-		DBBC6B06294EC90B006BF7D1 /* GradeChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC6B05294EC90B006BF7D1 /* GradeChartManager.swift */; };
 		DBC16E2B2A08013E007F474D /* ClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC16E2A2A08013E007F474D /* ClassView.swift */; };
 		DBC16E2E2A088944007F474D /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC16E2D2A088944007F474D /* Order.swift */; };
 		DBC198D62A0433A900AF8838 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC198D52A0433A900AF8838 /* NotificationManager.swift */; };
@@ -44,22 +44,10 @@
 		DBD8C63129F1ABE30074F225 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBD8C63029F1ABE30074F225 /* Settings.storyboard */; };
 		DBDE1515290495F10027A22D /* Assignments.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDE1514290495F10027A22D /* Assignments.swift */; };
 		DBE4E875293560F2001C4ACB /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E874293560F2001C4ACB /* Util.swift */; };
-		DBFF8A5A2A12F0DA00DFF80C /* Powerschool_Helper_WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFF8A592A12F0DA00DFF80C /* Powerschool_Helper_WatchApp.swift */; };
-		DBFF8A5C2A12F0DA00DFF80C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFF8A5B2A12F0DA00DFF80C /* ContentView.swift */; };
-		DBFF8A5E2A12F0DB00DFF80C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBFF8A5D2A12F0DB00DFF80C /* Assets.xcassets */; };
-		DBFF8A612A12F0DB00DFF80C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBFF8A602A12F0DB00DFF80C /* Preview Assets.xcassets */; };
-		DBFF8A642A12F0DB00DFF80C /* Powerschool Helper Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = DBFF8A572A12F0DA00DFF80C /* Powerschool Helper Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DBFEBE3E2AC2737A0037F554 /* StudentInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFEBE3D2AC2737A0037F554 /* StudentInfo.storyboard */; };
+		DBFEBE402AC273DB0037F554 /* Order.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFEBE3F2AC273DB0037F554 /* Order.storyboard */; };
+		DBFEBE442AC2743F0037F554 /* Report.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFEBE432AC2743F0037F554 /* Report.storyboard */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		DBFF8A622A12F0DB00DFF80C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DB96D28528C27E6300C36782 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DBFF8A562A12F0DA00DFF80C;
-			remoteInfo = "Powerschool Helper Watch Watch App";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		DB2CCF2429FBFB3F00501912 /* Embed Watch Content */ = {
@@ -68,7 +56,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				DBFF8A642A12F0DB00DFF80C /* Powerschool Helper Watch Watch App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,16 +73,19 @@
 		DB00C5922A0ABA6F00F05419 /* Help.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Help.storyboard; sourceTree = "<group>"; };
 		DB00C5942A0ABB0300F05419 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		DB00C5962A0ABDA600F05419 /* Assignments.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Assignments.storyboard; sourceTree = "<group>"; };
-		DB00C5982A0B12D300F05419 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
-		DB00C59A2A0B131F00F05419 /* SidebarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SidebarView.xib; sourceTree = "<group>"; };
+		DB0C67E02AB11FAE009EC88B /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		DB0C67E22AB12311009EC88B /* WebPageEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageEvents.swift; sourceTree = "<group>"; };
+		DB0C67E42AB1263E009EC88B /* Storyboards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboards.swift; sourceTree = "<group>"; };
 		DB1781432954E729002DBB93 /* NetoworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetoworkMonitor.swift; sourceTree = "<group>"; };
 		DB17814729552558002DBB93 /* WebPageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageManager.swift; sourceTree = "<group>"; };
 		DB18A40428C816AB0034037F /* ClassList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassList.swift; sourceTree = "<group>"; };
 		DB26928C2A07FF7100D8B9C9 /* ClassView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClassView.xib; sourceTree = "<group>"; };
+		DB3FDDC72A719AE8001B575C /* StudentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInfo.swift; sourceTree = "<group>"; };
+		DB509C872A89D3740091FFBC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB67174A2A002F090065F9C6 /* Powerschool Helper Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Powerschool Helper Watch App.entitlements"; sourceTree = "<group>"; };
 		DB726F3828EA596B00AF5F41 /* ClassInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassInfo.swift; sourceTree = "<group>"; };
-		DB8E86AF2958F68C004D3A7D /* ClassDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDataManager.swift; sourceTree = "<group>"; };
-		DB8E86B1295A57A7004D3A7D /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		DB8E86AF2958F68C004D3A7D /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		DB8E86B1295A57A7004D3A7D /* ClassList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ClassList.storyboard; sourceTree = "<group>"; };
 		DB8E8BDE29CB3896006A1EED /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		DB8EE38B29AAFE54004CE37F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB8EE3B329ABE109004CE37F /* QuarterSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuarterSelection.swift; sourceTree = "<group>"; };
@@ -105,12 +95,10 @@
 		DB96D29428C27E6300C36782 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		DB96D29928C27E6600C36782 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB96D29C28C27E6600C36782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		DB9C45CD29CCC38E00953EB8 /* ClassInfoBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInfoBar.swift; sourceTree = "<group>"; };
+		DB9C45CD29CCC38E00953EB8 /* TabBars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBars.swift; sourceTree = "<group>"; };
 		DBA1B65A2927B60B004D15FE /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		DBA307102A12F2360048DCF4 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		DBB805202A17EC73001281B5 /* WatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchManager.swift; sourceTree = "<group>"; };
-		DBBC6AFD294EBD35006BF7D1 /* GradeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeChartView.swift; sourceTree = "<group>"; };
-		DBBC6B05294EC90B006BF7D1 /* GradeChartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeChartManager.swift; sourceTree = "<group>"; };
+		DBBA25E22ABA776000409CE7 /* ReportClassView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportClassView.xib; sourceTree = "<group>"; };
+		DBBA25E42ABA776A00409CE7 /* ReportClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportClassView.swift; sourceTree = "<group>"; };
 		DBC16E2A2A08013E007F474D /* ClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassView.swift; sourceTree = "<group>"; };
 		DBC16E2D2A088944007F474D /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		DBC198D52A0433A900AF8838 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -120,11 +108,9 @@
 		DBD8C63029F1ABE30074F225 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		DBDE1514290495F10027A22D /* Assignments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignments.swift; sourceTree = "<group>"; };
 		DBE4E874293560F2001C4ACB /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		DBFF8A572A12F0DA00DFF80C /* Powerschool Helper Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Powerschool Helper Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DBFF8A592A12F0DA00DFF80C /* Powerschool_Helper_WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Powerschool_Helper_WatchApp.swift; sourceTree = "<group>"; };
-		DBFF8A5B2A12F0DA00DFF80C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		DBFF8A5D2A12F0DB00DFF80C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DBFF8A602A12F0DB00DFF80C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DBFEBE3D2AC2737A0037F554 /* StudentInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = StudentInfo.storyboard; sourceTree = "<group>"; };
+		DBFEBE3F2AC273DB0037F554 /* Order.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Order.storyboard; sourceTree = "<group>"; };
+		DBFEBE432AC2743F0037F554 /* Report.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Report.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,14 +120,6 @@
 			files = (
 				DBBC6B04294EC18B006BF7D1 /* SwiftUICharts in Frameworks */,
 				6F807E7745F2851B09F79182 /* Pods_PowerSchool_Helper.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DBFF8A542A12F0DA00DFF80C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B2B0F9D4CD720D5FEAD7439B /* Pods_Powerschool_Helper_Watch_Watch_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,30 +146,43 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		DB17814529552409002DBB93 /* ViewControllers */ = {
+		DB0C67DE2AB11F6A009EC88B /* Webpage */ = {
 			isa = PBXGroup;
 			children = (
-				DB96D29428C27E6300C36782 /* Login.swift */,
-				DBA1B65A2927B60B004D15FE /* Settings.swift */,
-				DB18A40428C816AB0034037F /* ClassList.swift */,
-				DB726F3828EA596B00AF5F41 /* ClassInfo.swift */,
-				DBDE1514290495F10027A22D /* Assignments.swift */,
-				DB8EE3B329ABE109004CE37F /* QuarterSelection.swift */,
-				DB9C45CD29CCC38E00953EB8 /* ClassInfoBar.swift */,
-				DBC198D92A05B45E00AF8838 /* Report.swift */,
-				DBC16E2D2A088944007F474D /* Order.swift */,
+				DB17814729552558002DBB93 /* WebPageManager.swift */,
+				DB0C67E22AB12311009EC88B /* WebPageEvents.swift */,
 			);
-			path = ViewControllers;
+			path = Webpage;
+			sourceTree = "<group>";
+		};
+		DB0C67DF2AB11F96009EC88B /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				DB8E86AF2958F68C004D3A7D /* Database.swift */,
+				DB0C67E02AB11FAE009EC88B /* Account.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		DB17814529552409002DBB93 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				DB18A40428C816AB0034037F /* ClassList.swift */,
+				DB8E86B1295A57A7004D3A7D /* ClassList.storyboard */,
+				DB726F3828EA596B00AF5F41 /* ClassInfo.swift */,
+				DBD8C62E29F1AB370074F225 /* ClassInfo.storyboard */,
+			);
+			path = Class;
 			sourceTree = "<group>";
 		};
 		DB178146295524E5002DBB93 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				DBE4E874293560F2001C4ACB /* Util.swift */,
+				DB0C67E42AB1263E009EC88B /* Storyboards.swift */,
 				DB96D29028C27E6300C36782 /* AppDelegate.swift */,
 				DB96D29228C27E6300C36782 /* SceneDelegate.swift */,
-				DBE4E874293560F2001C4ACB /* Util.swift */,
-				DB1781432954E729002DBB93 /* NetoworkMonitor.swift */,
-				DB8E8BDE29CB3896006A1EED /* KeyChain.swift */,
+				DB96D29B28C27E6600C36782 /* LaunchScreen.storyboard */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -199,12 +190,11 @@
 		DB178149295534D2002DBB93 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DB001047294A5D6B00318B03 /* ProgressView.swift */,
-				DBBC6AFD294EBD35006BF7D1 /* GradeChartView.swift */,
 				DB26928C2A07FF7100D8B9C9 /* ClassView.xib */,
 				DBC16E2A2A08013E007F474D /* ClassView.swift */,
-				DB00C5982A0B12D300F05419 /* SidebarView.swift */,
-				DB00C59A2A0B131F00F05419 /* SidebarView.xib */,
+				DBBA25E22ABA776000409CE7 /* ReportClassView.xib */,
+				DBBA25E42ABA776A00409CE7 /* ReportClassView.swift */,
+				DB001047294A5D6B00318B03 /* ProgressView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -214,7 +204,6 @@
 			children = (
 				DB67174A2A002F090065F9C6 /* Powerschool Helper Watch App.entitlements */,
 				DB96D28F28C27E6300C36782 /* PowerSchool Helper */,
-				DBFF8A582A12F0DA00DFF80C /* Powerschool Helper Watch Watch App */,
 				DB96D28E28C27E6300C36782 /* Products */,
 				A5D4FA68F4644560DA344A23 /* Pods */,
 				32F8AE75FB50AACAEBAC0ED8 /* Frameworks */,
@@ -225,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				DB96D28D28C27E6300C36782 /* PowerSchool Helper.app */,
-				DBFF8A572A12F0DA00DFF80C /* Powerschool Helper Watch Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -233,14 +221,20 @@
 		DB96D28F28C27E6300C36782 /* PowerSchool Helper */ = {
 			isa = PBXGroup;
 			children = (
+				DBFEBE3A2AC270C30037F554 /* General */,
+				DB17814529552409002DBB93 /* Class */,
+				DBFEBE392AC270750037F554 /* Assignments */,
+				DBFEBE3C2AC271680037F554 /* Settings */,
+				DB0C67DF2AB11F96009EC88B /* Database */,
+				DB0C67DE2AB11F6A009EC88B /* Webpage */,
+				DBFEBE3B2AC271130037F554 /* TabBar */,
 				DBC16E2C2A08208B007F474D /* Managers */,
-				DBD8C62D29F1AAFE0074F225 /* Storyboards */,
-				DBC659DE29B420D1002419D6 /* PowerSchool Helper.entitlements */,
 				DB178146295524E5002DBB93 /* Utility */,
-				DB17814529552409002DBB93 /* ViewControllers */,
 				DB178149295534D2002DBB93 /* Views */,
 				DB96D29928C27E6600C36782 /* Assets.xcassets */,
 				DB8EE38B29AAFE54004CE37F /* Info.plist */,
+				DB509C872A89D3740091FFBC /* GoogleService-Info.plist */,
+				DBC659DE29B420D1002419D6 /* PowerSchool Helper.entitlements */,
 			);
 			path = "PowerSchool Helper";
 			sourceTree = "<group>";
@@ -248,47 +242,54 @@
 		DBC16E2C2A08208B007F474D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				DB17814729552558002DBB93 /* WebPageManager.swift */,
-				DB8E86AF2958F68C004D3A7D /* ClassDataManager.swift */,
-				DBBC6B05294EC90B006BF7D1 /* GradeChartManager.swift */,
 				DBC198D52A0433A900AF8838 /* NotificationManager.swift */,
-				DBB805202A17EC73001281B5 /* WatchManager.swift */,
+				DB8E8BDE29CB3896006A1EED /* KeyChain.swift */,
+				DB1781432954E729002DBB93 /* NetoworkMonitor.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		DBD8C62D29F1AAFE0074F225 /* Storyboards */ = {
+		DBFEBE392AC270750037F554 /* Assignments */ = {
 			isa = PBXGroup;
 			children = (
-				DB8E86B1295A57A7004D3A7D /* Main.storyboard */,
-				DBD8C62E29F1AB370074F225 /* ClassInfo.storyboard */,
-				DBD8C63029F1ABE30074F225 /* Settings.storyboard */,
-				DB96D29B28C27E6600C36782 /* LaunchScreen.storyboard */,
-				DB00C5922A0ABA6F00F05419 /* Help.storyboard */,
-				DB00C5942A0ABB0300F05419 /* Login.storyboard */,
+				DBDE1514290495F10027A22D /* Assignments.swift */,
 				DB00C5962A0ABDA600F05419 /* Assignments.storyboard */,
 			);
-			path = Storyboards;
+			path = Assignments;
 			sourceTree = "<group>";
 		};
-		DBFF8A582A12F0DA00DFF80C /* Powerschool Helper Watch Watch App */ = {
+		DBFEBE3A2AC270C30037F554 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				DBFF8A592A12F0DA00DFF80C /* Powerschool_Helper_WatchApp.swift */,
-				DBFF8A5B2A12F0DA00DFF80C /* ContentView.swift */,
-				DBFF8A5D2A12F0DB00DFF80C /* Assets.xcassets */,
-				DBFF8A5F2A12F0DB00DFF80C /* Preview Content */,
-				DBA307102A12F2360048DCF4 /* DataManager.swift */,
+				DB96D29428C27E6300C36782 /* Login.swift */,
+				DB00C5942A0ABB0300F05419 /* Login.storyboard */,
+				DB8EE3B329ABE109004CE37F /* QuarterSelection.swift */,
+				DBFEBE3F2AC273DB0037F554 /* Order.storyboard */,
 			);
-			path = "Powerschool Helper Watch Watch App";
+			path = General;
 			sourceTree = "<group>";
 		};
-		DBFF8A5F2A12F0DB00DFF80C /* Preview Content */ = {
+		DBFEBE3B2AC271130037F554 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				DBFF8A602A12F0DB00DFF80C /* Preview Assets.xcassets */,
+				DB9C45CD29CCC38E00953EB8 /* TabBars.swift */,
+				DB3FDDC72A719AE8001B575C /* StudentInfo.swift */,
+				DBFEBE3D2AC2737A0037F554 /* StudentInfo.storyboard */,
+				DBC198D92A05B45E00AF8838 /* Report.swift */,
+				DBFEBE432AC2743F0037F554 /* Report.storyboard */,
 			);
-			path = "Preview Content";
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		DBFEBE3C2AC271680037F554 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DBA1B65A2927B60B004D15FE /* Settings.swift */,
+				DBD8C63029F1ABE30074F225 /* Settings.storyboard */,
+				DBC16E2D2A088944007F474D /* Order.swift */,
+				DB00C5922A0ABA6F00F05419 /* Help.storyboard */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,7 +309,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				DBFF8A632A12F0DB00DFF80C /* PBXTargetDependency */,
 			);
 			name = "PowerSchool Helper";
 			packageProductDependencies = (
@@ -316,24 +316,6 @@
 			);
 			productName = "PowerSchool Helper";
 			productReference = DB96D28D28C27E6300C36782 /* PowerSchool Helper.app */;
-			productType = "com.apple.product-type.application";
-		};
-		DBFF8A562A12F0DA00DFF80C /* Powerschool Helper Watch Watch App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DBFF8A652A12F0DB00DFF80C /* Build configuration list for PBXNativeTarget "Powerschool Helper Watch Watch App" */;
-			buildPhases = (
-				6190D7784308010A0321325B /* [CP] Check Pods Manifest.lock */,
-				DBFF8A532A12F0DA00DFF80C /* Sources */,
-				DBFF8A542A12F0DA00DFF80C /* Frameworks */,
-				DBFF8A552A12F0DA00DFF80C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Powerschool Helper Watch Watch App";
-			productName = "Powerschool Helper Watch Watch App";
-			productReference = DBFF8A572A12F0DA00DFF80C /* Powerschool Helper Watch Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -344,13 +326,10 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					DB96D28C28C27E6300C36782 = {
 						CreatedOnToolsVersion = 13.4.1;
-					};
-					DBFF8A562A12F0DA00DFF80C = {
-						CreatedOnToolsVersion = 14.3;
 					};
 				};
 			};
@@ -371,7 +350,6 @@
 			projectRoot = "";
 			targets = (
 				DB96D28C28C27E6300C36782 /* PowerSchool Helper */,
-				DBFF8A562A12F0DA00DFF80C /* Powerschool Helper Watch Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -382,52 +360,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB00C5952A0ABB0300F05419 /* Login.storyboard in Resources */,
-				DB00C59B2A0B131F00F05419 /* SidebarView.xib in Resources */,
-				DB8E86B2295A57A7004D3A7D /* Main.storyboard in Resources */,
+				DB8E86B2295A57A7004D3A7D /* ClassList.storyboard in Resources */,
 				DB26928D2A07FF7100D8B9C9 /* ClassView.xib in Resources */,
 				DBD8C62F29F1AB370074F225 /* ClassInfo.storyboard in Resources */,
+				DBFEBE3E2AC2737A0037F554 /* StudentInfo.storyboard in Resources */,
 				DB96D29D28C27E6600C36782 /* LaunchScreen.storyboard in Resources */,
 				DB00C5932A0ABA6F00F05419 /* Help.storyboard in Resources */,
+				DBFEBE402AC273DB0037F554 /* Order.storyboard in Resources */,
 				DB00C5972A0ABDA600F05419 /* Assignments.storyboard in Resources */,
 				DB96D29A28C27E6600C36782 /* Assets.xcassets in Resources */,
+				DB509C882A89D3740091FFBC /* GoogleService-Info.plist in Resources */,
 				DBD8C63129F1ABE30074F225 /* Settings.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DBFF8A552A12F0DA00DFF80C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DBFF8A612A12F0DB00DFF80C /* Preview Assets.xcassets in Resources */,
-				DBFF8A5E2A12F0DB00DFF80C /* Assets.xcassets in Resources */,
+				DBBA25E32ABA776000409CE7 /* ReportClassView.xib in Resources */,
+				DBFEBE442AC2743F0037F554 /* Report.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6190D7784308010A0321325B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Powerschool Helper Watch Watch App-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		786ECD165C75E3C925C3478B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -475,50 +426,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB17814829552558002DBB93 /* WebPageManager.swift in Sources */,
+				DBBA25E52ABA776A00409CE7 /* ReportClassView.swift in Sources */,
 				DB96D29528C27E6300C36782 /* Login.swift in Sources */,
+				DB3FDDC82A719AE8001B575C /* StudentInfo.swift in Sources */,
 				DB8EE3B429ABE109004CE37F /* QuarterSelection.swift in Sources */,
-				DBBC6B06294EC90B006BF7D1 /* GradeChartManager.swift in Sources */,
 				DB96D29128C27E6300C36782 /* AppDelegate.swift in Sources */,
 				DB8E8BDF29CB3896006A1EED /* KeyChain.swift in Sources */,
 				DBC16E2E2A088944007F474D /* Order.swift in Sources */,
-				DB00C5992A0B12D300F05419 /* SidebarView.swift in Sources */,
 				DBA1B65B2927B60B004D15FE /* Settings.swift in Sources */,
-				DB9C45CE29CCC38E00953EB8 /* ClassInfoBar.swift in Sources */,
+				DB9C45CE29CCC38E00953EB8 /* TabBars.swift in Sources */,
 				DBE4E875293560F2001C4ACB /* Util.swift in Sources */,
+				DB0C67E52AB1263E009EC88B /* Storyboards.swift in Sources */,
 				DBC198DA2A05B45E00AF8838 /* Report.swift in Sources */,
 				DB726F3928EA596B00AF5F41 /* ClassInfo.swift in Sources */,
 				DB96D29328C27E6300C36782 /* SceneDelegate.swift in Sources */,
-				DBB805212A17EC73001281B5 /* WatchManager.swift in Sources */,
+				DB0C67E32AB12311009EC88B /* WebPageEvents.swift in Sources */,
 				DB18A40528C816AB0034037F /* ClassList.swift in Sources */,
 				DBC198D62A0433A900AF8838 /* NotificationManager.swift in Sources */,
-				DBBC6AFE294EBD35006BF7D1 /* GradeChartView.swift in Sources */,
-				DB8E86B02958F68C004D3A7D /* ClassDataManager.swift in Sources */,
+				DB8E86B02958F68C004D3A7D /* Database.swift in Sources */,
 				DBC16E2B2A08013E007F474D /* ClassView.swift in Sources */,
 				DB1781442954E729002DBB93 /* NetoworkMonitor.swift in Sources */,
 				DBDE1515290495F10027A22D /* Assignments.swift in Sources */,
 				DB001048294A5D6C00318B03 /* ProgressView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DBFF8A532A12F0DA00DFF80C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DBFF8A5C2A12F0DA00DFF80C /* ContentView.swift in Sources */,
-				DBA307112A12F2360048DCF4 /* DataManager.swift in Sources */,
-				DBFF8A5A2A12F0DA00DFF80C /* Powerschool_Helper_WatchApp.swift in Sources */,
+				DB0C67E12AB11FAE009EC88B /* Account.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		DBFF8A632A12F0DB00DFF80C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DBFF8A562A12F0DA00DFF80C /* Powerschool Helper Watch Watch App */;
-			targetProxy = DBFF8A622A12F0DB00DFF80C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		DB96D29B28C27E6600C36782 /* LaunchScreen.storyboard */ = {
@@ -535,6 +469,7 @@
 		DB96D29F28C27E6600C36782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -568,6 +503,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -596,6 +532,7 @@
 		DB96D2A028C27E6600C36782 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -629,6 +566,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -652,12 +590,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ABC2092D65DD935F7B78DA1B /* Pods-PowerSchool Helper.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "PowerSchool Helper/PowerSchool Helper.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CP8LXV38C4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "/Users/branson/Desktop/PowerSchool Helper/PowerSchool Helper/Info.plist";
@@ -676,7 +614,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Tiskua.PowerSchool-Helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -689,12 +627,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 476E4781A7F45111CC8A896F /* Pods-PowerSchool Helper.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "PowerSchool Helper/PowerSchool Helper.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CP8LXV38C4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "/Users/branson/Desktop/PowerSchool Helper/PowerSchool Helper/Info.plist";
@@ -713,76 +651,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Tiskua.PowerSchool-Helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		DBFF8A662A12F0DB00DFF80C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6E693BB8C6AB98206B7F0E1 /* Pods-Powerschool Helper Watch Watch App.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Powerschool Helper Watch Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = CP8LXV38C4;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Powerschool Helper Watch";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.Tiskua.PowerSchool-Helper";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Tiskua.PowerSchool-Helper.watchkitapp";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
-			};
-			name = Debug;
-		};
-		DBFF8A672A12F0DB00DFF80C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69BA12DE3AC70212467DAE25 /* Pods-Powerschool Helper Watch Watch App.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Powerschool Helper Watch Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = CP8LXV38C4;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Powerschool Helper Watch";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.Tiskua.PowerSchool-Helper";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Tiskua.PowerSchool-Helper.watchkitapp";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -803,15 +677,6 @@
 			buildConfigurations = (
 				DB96D2A228C27E6600C36782 /* Debug */,
 				DB96D2A328C27E6600C36782 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DBFF8A652A12F0DB00DFF80C /* Build configuration list for PBXNativeTarget "Powerschool Helper Watch Watch App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DBFF8A662A12F0DB00DFF80C /* Debug */,
-				DBFF8A672A12F0DB00DFF80C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -8,20 +8,10 @@
 import UIKit
 
 final class ClassView: UIView {
-    var selectedLayout: layoutOptions.RawValue = layoutOptions.doubleColumn.rawValue
-
-    enum layoutOptions: String {
-        case doubleColumn
-        case singleColumn
-    }
-    
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var namelabel: UILabel!
     @IBOutlet weak var gradeLabel: UILabel!
-    
-    @IBOutlet weak var gradeLabelDouble: UILabel!
-    @IBOutlet weak var nameLabelDouble: UILabel!
-    
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var secondGradeLabel: UILabel!
+    @IBOutlet weak var settingsButton: UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,15 +25,38 @@ final class ClassView: UIView {
     
     
     func commonInit() {
-        if UserDefaults.standard.value(forKey: "selectedLayout") != nil {
-            selectedLayout = UserDefaults.standard.value(forKey: "selectedLayout") as! layoutOptions.RawValue
-        }
-        let index: Int = selectedLayout == layoutOptions.singleColumn.rawValue ? 0 : 1
-        guard let view = self.loadViewFromNib(nibName: "ClassView", index: index) else { return }
+        guard let view = self.loadViewFromNib(nibName: "ClassView", index: 0) else { return }
         view.frame = self.bounds
         view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        imageView.contentMode = .scaleAspectFill
+        
+        namelabel.adjustsFontSizeToFitWidth = true
+        namelabel.minimumScaleFactor = 0.2
+        namelabel.numberOfLines = 0
         addSubview(view)
+    }
+    
+    @IBAction func clickedSettingsButton(_ sender: Any) {
+        for cl in DatabaseManager.shared.getClassesData(username: AccountManager.global.username) {
+            if cl.className != namelabel.text || cl.quarter != AccountManager.global.selectedQuarter { continue }
+            let href: String = cl.href
+            if href.trimmingCharacters(in: .whitespacesAndNewlines) == "" { continue }
+            AccountManager.global.classType = ClassType(username: AccountManager.global.username,
+                                                        className: namelabel.text ?? "",
+                                                        quarter: AccountManager.global.selectedQuarter,
+                                                        href: href)
+            break
+        }
+        
+        guard let vc = Storyboards.shared.classSettingsViewController() else { return }
+        vc.loadViewIfNeeded()
+        if let sheet = vc.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+        }
+        
+        self.findViewController()?.present(vc, animated: true)
+        
+        vc.classNameLabel.text = namelabel.text
     }
 }
 
@@ -53,4 +66,15 @@ extension UIView {
         let nib = UINib(nibName: nibName, bundle: bundle)
         return nib.instantiate(withOwner: self, options: nil)[index] as? UIView
     }
+    
+    func findViewController() -> UIViewController? {
+        if let nextResponder = self.next as? UIViewController {
+            return nextResponder
+        } else if let nextResponder = self.next as? UIView {
+            return nextResponder.findViewController()
+        } else {
+            return nil
+        }
+    }
 }
+

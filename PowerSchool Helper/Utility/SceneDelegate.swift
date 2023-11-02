@@ -16,9 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         UNUserNotificationCenter.current().delegate = self
-        
-        guard let _ = (scene as? UIWindowScene) else { return }
-        
+                
         NotificationManager.shared.scheduleNotification()
     }
 
@@ -32,6 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        
+        
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -42,13 +42,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-    
+        
+        
     }
+    
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        
+        
+        
+        
     }
 }
 
@@ -56,10 +62,8 @@ extension SceneDelegate: UNUserNotificationCenterDelegate{
     
   // This function will be called right after user tap on the notification
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-      let storyboard = UIStoryboard(name: "Main", bundle: nil)
-      guard let reportVC = storyboard.instantiateViewController(withIdentifier: "ReportViewController") as? ReportVC else {return}
-      guard let vc = self.window?.rootViewController else { return }
-      vc.present(reportVC, animated: true)
+      guard let tabBar = Storyboards.shared.classListTabbarController() else { return }
+      tabBar.selectedIndex = 3
       completionHandler()
   }
 }

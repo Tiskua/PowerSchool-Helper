@@ -36,5 +36,165 @@
             landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6DE40CBD-6E36-410C-B25F-044F441F2207"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PowerSchool Helper/ViewControllers/Login.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ACAAD9B4-6A17-4DB3-8DF3-F1CB07208952"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PowerSchool Helper/ViewControllers/StudentInfo.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A49F2A1B-FFDB-42D9-919B-69D518FFAEB7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PowerSchool Helper/ViewControllers/Settings.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "resetClasses(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B419B5E-EC70-4214-9F9D-078FB08F01C5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PowerSchool Helper/Views/ReportClassView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "ReportClassView"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "5B419B5E-EC70-4214-9F9D-078FB08F01C5 - 2884603b614f0612"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PowerSchool_Helper.ReportClassView.init(frame: __C.CGRect) -&gt; PowerSchool_Helper.ReportClassView"
+                  moduleName = "PowerSchool Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/branson/Desktop/PowerSchool%20Helper/PowerSchool%20Helper/Views/ReportClassView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  uuid = "5B419B5E-EC70-4214-9F9D-078FB08F01C5 - 90d0b8ad3351ad10"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[0] = Owned To Guaranteed&gt; of PowerSchool_Helper.ReportClassView.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;PowerSchool_Helper.ReportClassView&gt;"
+                  moduleName = "PowerSchool Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/branson/Desktop/PowerSchool%20Helper/PowerSchool%20Helper/Views/ReportClassView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "76">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "97B4B79D-C581-441E-949A-205F4FA224D3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PowerSchool Helper/Views/ReportClassView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "ReportClassView"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "97B4B79D-C581-441E-949A-205F4FA224D3 - 2884603b614f0631"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PowerSchool_Helper.ReportClassView.init(frame: __C.CGRect) -&gt; PowerSchool_Helper.ReportClassView"
+                  moduleName = "PowerSchool Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/branson/Desktop/PowerSchool%20Helper/PowerSchool%20Helper/Views/ReportClassView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "97B4B79D-C581-441E-949A-205F4FA224D3 - 90d0b8ad3351ad33"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[0] = Owned To Guaranteed&gt; of PowerSchool_Helper.ReportClassView.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;PowerSchool_Helper.ReportClassView&gt;"
+                  moduleName = "PowerSchool Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/branson/Desktop/PowerSchool%20Helper/PowerSchool%20Helper/Views/ReportClassView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "96">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D5BC9C0F-6C67-4CF2-A56F-368FA26526DD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PowerSchool Helper/Assignments/Assignments.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
+            landmarkName = "updateSearchResults(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

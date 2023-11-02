@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gvl-9Y-JvI">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22129"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Order View Controller-->
+        <scene sceneID="ctf-q5-BxP">
+            <objects>
+                <viewController storyboardIdentifier="OrderViewController" id="zSm-Bg-AGf" customClass="OrderViewController" customModule="PowerSchool_Helper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EjM-sA-qLq">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3eQ-NU-r1r">
+                                <rect key="frame" x="10" y="143" width="373" height="475"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" showsReorderControl="YES" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="cell" rowHeight="80" id="bL6-ro-Uyj">
+                                        <rect key="frame" x="0.0" y="50" width="373" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bL6-ro-Uyj" id="ZyR-0Z-1mu">
+                                            <rect key="frame" x="0.0" y="0.0" width="373" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" name="AccentColor"/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Teo-CA-JAz">
+                                <rect key="frame" x="0.0" y="79" width="393" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" systemColor="labelColor"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textAttributes>
+                                <textAttributes key="largeTitleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Order" id="D6o-P4-PKY">
+                                        <barButtonItem key="leftBarButtonItem" title="Reset" id="Fh5-Zt-DvE">
+                                            <connections>
+                                                <action selector="didTapReset:" destination="zSm-Bg-AGf" id="jLf-Oy-kuw"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Sort" id="6qp-uP-l0v">
+                                            <connections>
+                                                <action selector="didTapSort" destination="zSm-Bg-AGf" id="DbY-2w-Du9"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="lgj-5n-f7E"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" systemColor="tintColor"/>
+                        <constraints>
+                            <constraint firstItem="Teo-CA-JAz" firstAttribute="trailing" secondItem="lgj-5n-f7E" secondAttribute="trailing" id="1R2-dU-Nf5"/>
+                            <constraint firstItem="lgj-5n-f7E" firstAttribute="trailing" secondItem="3eQ-NU-r1r" secondAttribute="trailing" constant="10" id="9Ys-Wp-3Lu"/>
+                            <constraint firstItem="Teo-CA-JAz" firstAttribute="top" secondItem="lgj-5n-f7E" secondAttribute="top" constant="20" id="X2E-Qc-Y6q"/>
+                            <constraint firstItem="3eQ-NU-r1r" firstAttribute="top" secondItem="Teo-CA-JAz" secondAttribute="bottom" constant="20" id="dVI-QN-4PK"/>
+                            <constraint firstItem="lgj-5n-f7E" firstAttribute="bottom" secondItem="3eQ-NU-r1r" secondAttribute="bottom" constant="200" id="kSo-iC-BfE"/>
+                            <constraint firstItem="3eQ-NU-r1r" firstAttribute="leading" secondItem="lgj-5n-f7E" secondAttribute="leading" constant="10" id="v5U-dX-jmQ"/>
+                            <constraint firstItem="Teo-CA-JAz" firstAttribute="leading" secondItem="lgj-5n-f7E" secondAttribute="leading" id="ztc-It-usg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="resetButton" destination="Fh5-Zt-DvE" id="eLw-31-maX"/>
+                        <outlet property="sortButton" destination="6qp-uP-l0v" id="Mm4-oG-Ye8"/>
+                        <outlet property="table" destination="3eQ-NU-r1r" id="6n1-rb-u15"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dor-rX-rIH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4105" y="-265"/>
+        </scene>
+        <!--Quarter Selection Controller-->
+        <scene sceneID="OrF-18-tcQ">
+            <objects>
+                <viewController storyboardIdentifier="QuarterSelectionController" id="gvl-9Y-JvI" customClass="QuarterSelectionController" customModule="PowerSchool_Helper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="r3r-MQ-PGu">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="A4P-KJ-kSy">
+                                <rect key="frame" x="0.0" y="143" width="393" height="675"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="ni0-Xr-gVr" rowHeight="70" style="IBUITableViewCellStyleDefault" id="WMN-aw-ATZ">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WMN-aw-ATZ" id="hND-3q-VO3">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="70"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ni0-Xr-gVr">
+                                                    <rect key="frame" x="20" y="0.0" width="353" height="70"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
+                                                    <color key="textColor" systemColor="systemGray3Color"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xt8-Ge-RbC">
+                                <rect key="frame" x="0.0" y="79" width="393" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textAttributes>
+                                <textAttributes key="largeTitleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Term" id="7fT-BI-zJg">
+                                        <barButtonItem key="leftBarButtonItem" title="Reset" id="SSE-hc-ye3">
+                                            <connections>
+                                                <action selector="resetAction:" destination="gvl-9Y-JvI" id="Ojj-gN-PNe"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="YND-6W-gdM">
+                                            <connections>
+                                                <action selector="didTapSort:" destination="gvl-9Y-JvI" id="yZs-eD-toR"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Xlk-uU-44p"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xt8-Ge-RbC" firstAttribute="leading" secondItem="Xlk-uU-44p" secondAttribute="leading" id="HQA-8K-MCv"/>
+                            <constraint firstItem="Xlk-uU-44p" firstAttribute="bottom" secondItem="A4P-KJ-kSy" secondAttribute="bottom" id="JXN-yk-U9O"/>
+                            <constraint firstItem="xt8-Ge-RbC" firstAttribute="top" secondItem="Xlk-uU-44p" secondAttribute="top" constant="20" id="Uif-2Q-JAO"/>
+                            <constraint firstItem="A4P-KJ-kSy" firstAttribute="leading" secondItem="Xlk-uU-44p" secondAttribute="leading" id="Xb1-Sd-i30"/>
+                            <constraint firstAttribute="trailing" secondItem="xt8-Ge-RbC" secondAttribute="trailing" id="kgm-X3-8JC"/>
+                            <constraint firstItem="Xlk-uU-44p" firstAttribute="trailing" secondItem="A4P-KJ-kSy" secondAttribute="trailing" id="mUA-ve-XbI"/>
+                            <constraint firstItem="A4P-KJ-kSy" firstAttribute="top" secondItem="xt8-Ge-RbC" secondAttribute="bottom" constant="20" id="vD4-qc-Rg8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="myTable" destination="A4P-KJ-kSy" id="IbR-M2-PZA"/>
+                        <outlet property="resetButton" destination="SSE-hc-ye3" id="GNK-xC-yRc"/>
+                        <outlet property="sortButton" destination="YND-6W-gdM" id="GbX-qv-Y7U"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ak4-Cb-Mmh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3121.3953488372094" y="-165.45064377682405"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray3Color">
+            <color red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
