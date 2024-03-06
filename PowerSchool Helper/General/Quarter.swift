@@ -44,9 +44,10 @@ class QuarterSelectionController: UIViewController {
     }
     
     @IBAction func didTapSort(_ sender: Any) {
-        myTable.isEditing = !myTable.isEditing
+        myTable.setEditing(!myTable.isEditing, animated: true)
 
         sortButton.title = myTable.isEditing ? "Done" : "Sort"
+        
         if !myTable.isEditing {
             UserDefaults.standard.set(quarterList, forKey: "order-quarter-list")
         }
@@ -68,17 +69,17 @@ extension QuarterSelectionController: UITableViewDelegate, UITableViewDataSource
         
         if selectedRow == indexPath.row {
             cell.accessoryType = .checkmark
-            cell.backgroundColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 1)
+            cell.backgroundColor = Util.getThemeColor().withAlphaComponent(0.2)
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
         if selectedRow != indexPath.row {
-            cell?.accessoryType = .checkmark
-            cell?.backgroundColor = UIColor(red: 20/255, green: 20/255, blue: 20/55, alpha: 1)
             selectedRow = indexPath.row
+            cell.accessoryType = .checkmark
+            cell.backgroundColor = Util.getThemeColor().withAlphaComponent(0.2)
             AccountManager.global.selectedQuarter = indexPath.row + 1
             UserDefaults.standard.set(indexPath.row+1, forKey: "quarter")
             WebpageManager.shared.setPageLoadingStatus(status: .refreshing)
@@ -97,10 +98,13 @@ extension QuarterSelectionController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        
         return .none
     }
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return false
     }
+    
 
 }
+

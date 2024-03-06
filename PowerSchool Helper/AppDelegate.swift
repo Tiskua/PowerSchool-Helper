@@ -7,7 +7,7 @@
 import GoogleMobileAds
 import UIKit
 import UserNotifications
-
+import FirebaseCore
 @main
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -18,7 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         UNUserNotificationCenter.current().delegate = self
-
+        
+        
+        FirebaseApp.configure()
+        
         NetworkMonitor.shared.startMonitoring()
         return true
     }
